@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDC Site Orientation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .section-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #4a5568;
+            color: white;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .section-header:hover {
+            background-color: #2d3748;
+        }
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .section-content.active {
+            max-height: 1500px;
+            padding: 1.5rem;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .arrow.rotate {
+            transform: rotate(90deg);
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2100; /* Higher z-index */
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 300px;
+            max-width: 90%;
+            transition: top 0.5s ease-out;
+        }
+        .message-box.hidden {
+            top: -100px;
+        }
+        .message-box.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message-box.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .quiz-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .quiz-option {
+            display: block;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .quiz-option:hover {
+            background-color: #f0f2f5;
+        }
+        .quiz-option input {
+            margin-right: 1rem;
+        }
+        .download-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .download-btn:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div id="message" class="message-box hidden"></div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 md:p-10">
+        <header class="text-center mb-8">
+            <div class="flex justify-end mb-4">
+                 <select id="language-selector" class="p-2 border rounded-md shadow-sm">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="ru">Русский</option>
+                    <option value="de">Deutsch</option>
+                    <option value="cs">Čeština</option>
+                </select>
+            </div>
+            <h1 id="main-title" class="text-4xl font-bold text-gray-800 mb-2"></h1>
+             <p id="welcome-message" class="text-lg text-gray-600 mt-4"></p>
+        </header>
+        
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('rights-content')">
+                <h2 id="rights-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span> </div>
+            <div id="rights-content" class="section-content" data-viewed="false">
+                <h3 id="rights-subheader" class="text-xl font-semibold text-gray-800 mb-3"></h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2 mb-6">
+                    <li id="right-to-know"></li>
+                    <li id="right-to-participate"></li>
+                    <li id="right-to-refuse"></li>
+                </ul>
+                <h3 id="obligations-subheader" class="text-xl font-semibold text-gray-800 mb-3"></h3>
+                 <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li id="obligation-work-safely"></li>
+                    <li id="obligation-use-ppe"></li>
+                    <li id="obligation-report-hazards"></li>
+                    <li id="obligation-no-disable"></li>
+                    <li id="obligation-cooperate"></li>
+                    <li id="obligation-training"></li>
+                    <li id="obligation-harassment"></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('emergency-contacts-content')">
+                <h2 id="emergency-contacts-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span> </div>
+            <div id="emergency-contacts-content" class="section-content" data-viewed="false">
+                 <ul class="list-disc pl-5 text-gray-700 space-y-4">
+                    <li id="contact-cso" class="flex justify-between items-center"></li>
+                    <li id="contact-first-aid-alt1" class="flex justify-between items-center"></li>
+                    <li id="contact-first-aid-alt2" class="flex justify-between items-center"></li>
+                    <li id="contact-radio"></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('hazards-content')">
+                <h2 id="hazards-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span> </div>
+            <div id="hazards-content" class="section-content" data-viewed="false">
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li id="hazard-mobile-equipment"></li>
+                    <li id="hazard-blasting"></li>
+                    <li id="hazard-alarm"></li>
+                    <li id="hazard-first-aid"></li>
+                    <li id="hazard-muster-point"></li>
+                    <li id="hazard-wildlife"></li>
+                    <li id="hazard-heights"></li>
+                    <li id="hazard-whmis"></li>
+                    <li id="hazard-extinguishers"></li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header" onclick="toggleSection('rules-content')">
+                <h2 id="rules-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span> </div>
+            <div id="rules-content" class="section-content" data-viewed="false">
+                <ul id="rules-list" class="list-disc pl-5 text-gray-700 space-y-2">
+                    <!-- Rules will be populated by JS -->
+                </ul>
+            </div>
+        </section>
+
+
+        <footer id="footer" class="text-center mt-10 text-gray-500 text-sm hidden">
+            <button id="startQuizButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline text-lg">
+            </button>
+        </footer>
+    </div>
+
+    <!-- Quiz Modal HTML -->
+    <div id="quiz-modal" class="modal-overlay hidden">
+        <div class="quiz-modal">
+            <div id="quiz-content">
+                <h2 id="question-text" class="text-2xl font-bold mb-4"></h2>
+                <div id="options-container" class="space-y-2"></div>
+                <button id="next-question-btn" class="mt-6 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></button>
+            </div>
+            <div id="quiz-results" class="hidden text-center">
+                <h2 id="results-title" class="text-3xl font-bold mb-4"></h2>
+                <p id="results-text" class="text-xl mb-6"></p>
+                <a href="#" id="quiz-action-btn" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                mainTitle: "WDC Site Orientation",
+                welcomeMessage: "Welcome to the WDC construction site. Please review the following information carefully for your safety and compliance with site rules.",
+                rightsHeader: "Your Rights and Obligations",
+                rightsSubheader: "Your Rights as a Worker:",
+                rightToKnow: "<strong>Right to Know:</strong> You have the right to know about hazards in your workplace and receive the training needed to protect yourself.",
+                rightToParticipate: "<strong>Right to Participate:</strong> You have the right to give your input to identify and solve safety problems on site.",
+                rightToRefuse: "<strong>Right to Refuse Unsafe Work:</strong> If you believe a job is dangerous for you or others, you have the right to refuse it. You must tell your supervisor immediately.",
+                obligationsSubheader: "Your Obligations as a Worker:",
+                obligationWorkSafely: "<strong>Work Safely:</strong> You must follow all company safety rules and procedures.",
+                obligationUsePpe: "<strong>Use Your PPE:</strong> It's your duty to correctly use the helmet, steel toe shoes, vest, and any other protective gear you're given.",
+                obligationReportHazards: "<strong>Report Hazards:</strong> If you see anything unsafe, tell your supervisor right away.",
+                obligationNoDisable: "<strong>Don't Disable Safety Devices:</strong> It's forbidden to remove or disable any guardrail or safety device. <strong class='text-orange-500'>This includes Danger/Caution tape. Do not enter or remove tape as it marks a control zone where a hazard may still be present, even if no one is working.</strong>",
+                obligationCooperate: "<strong>Cooperate with Everyone:</strong> You must work with your employer and coworkers on all safety matters.",
+                obligationTraining: "<strong>Attend Training:</strong> You must attend and take part in all safety training.",
+                obligationHarassment: "<strong>Harassment and Violence Policy:</strong> WDC is committed to a safe, respectful workplace. Bullying, harassment, and violence are not tolerated. Report any incidents to your supervisor immediately. All reports will be investigated promptly and confidentially.",
+                emergencyContactsHeader: "Emergency Contacts",
+                contactCso: "<strong>CSO and First Aid:</strong> Bethzy Hernandez - 604 906 0247",
+                contactFirstAidAlt1: "<strong>First Aid Alternate:</strong> Dan McGuire - 604 938 4354",
+                contactFirstAidAlt2: "<strong>First Aid Alternate:</strong> Dan Evans - 604 999 2847",
+                contactRadio: "The First Aid attendant on duty always has a radio on Channel 10.",
+                downloadContact: "Download",
+                hazardsHeader: "Site Hazards",
+                hazardMobileEquipment: "<strong>Mobile Equipment:</strong><ul class='list-circle pl-5'><li>Always make eye contact with the operator before you get close.</li><li>Never stand behind machinery or under suspended loads.</li></ul>",
+                hazardBlasting: "<strong>Blasting:</strong><ul class='list-circle pl-5'><li>Listen for the air horns. They will sound 12 times before a blast and 1 time after.</li></ul>",
+                hazardAlarm: "<strong>Alarm Signals (Air Horn):</strong><ul class='list-circle pl-5'><li><strong>First Aid:</strong> 3 short blasts.</li><li><strong>Site Evacuation:</strong> 1 long, continuous blast.</li></ul>",
+                hazardFirstAid: "<strong>First Aid Location:</strong> In the WDC site trailer.",
+                hazardMusterPoint: "<strong>Evacuation Muster Point:</strong> In front of the site office. Stay there until you are accounted for. Do not leave.",
+                hazardWildlife: "<strong>Wildlife (Bears, etc.):</strong><ul class='list-circle pl-5'><li>Do not leave food waste on site. If you bring food, you must take all garbage with you when you leave, including wrappers and disposable coffee cups.</li><li>Site garbage bins are for construction waste only.</li><li>Do not approach or feed wildlife.</li></ul>",
+                hazardHeights: "<strong>Working at Heights:</strong><ul class='list-circle pl-5'><li>Use guardrails or a safety harness if working over 10 feet (3 meters) high.</li><li>Stay 6 feet (2 meters) back from any unprotected edge.</li><li><strong class='text-red-600'>VERY IMPORTANT-GUARDRAILS:</strong> Guardrails are your primary fall protection. If a guardrail is removed for a task, wearing a harness is MANDATORY. The guardrail MUST be re-installed as soon as the work is done or the area is left unattended. If you see an opening without a guardrail, REPORT IT to your supervisor IMMEDIATELY. Your safety and your coworkers' safety depend on it!</li></ul>",
+                hazardWhmis: "<strong>Hazardous Materials (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC stores hazardous materials in the lock room and the Red Sea Can. A QR code to access the Safety Data Sheets (SDS) is available in these locations.</li><li>As a subcontractor, your direct supervisor will inform you of the location of your specific hazardous products.</li></ul>",
+                hazardExtinguishers: "<strong>Fire Extinguishers:</strong> Two extinguishers are located on each level of every building and parking garage. Emergency procedures are posted in these locations as well.",
+                rulesHeader: "General Site Rules",
+                rulesList: [
+                    "You must ALWAYS wear a high-visibility vest, hard hat, and steel-toe shoes.",
+                    "Wear hearing protection when using noisy equipment.",
+                    "Wear safety glasses when your work could create dust, sparks, or splashes.",
+                    "Headphones are permitted, but using the <strong>noise-cancellation feature is forbidden</strong>. You must be able to hear your surroundings.",
+                    "You cannot operate any machinery unless you are authorized and trained.",
+                    "<strong class='text-blue-600'>Before starting work, you MUST present the site's Construction Safety Officer (CSO) with proof of valid certification (tickets) for operating any Mobile Equipment (e.g., forklift, boom lift), Cranes, or for Fall Protection. The CSO will keep a copy. You will not be permitted to perform these tasks without it.</strong>",
+                    "Alcohol and drugs are strictly forbidden on site.",
+                    "Report ALL incidents, no matter how small.",
+                    "Report any fuel or oil spills immediately.",
+                    "Only park in designated areas.",
+                    "Do not park in front of the site office. Those spaces are for WDC staff only.",
+                    "Portable toilets are next to the site office. Flushable toilets are across the street.",
+                    "The water in the flushable toilets is NOT for drinking. Potable water is available from a tap on Building 1 (located between Building 1 and 2).",
+                    "Only authorized personnel are allowed in the blasting area.",
+                    "No dogs are allowed on site.",
+                    "<strong>Every crew must clean up their own work area daily.</strong>",
+                    "Horseplay and practical jokes that endanger others are not tolerated.",
+                    "<strong>Harassment, bullying, and violence are zero tolerance.</strong> Report any incidents immediately to your supervisor and/or the CSO.",
+                    "Smoking or vaping is only allowed in designated smoking areas."
+                ],
+                startQuizButton: "Start Quiz",
+                quiz: {
+                    questionBank: [
+                        { question: "What are the three essential pieces of PPE you must ALWAYS wear on site?", options: ["Hard hat, high-visibility vest, and steel-toe shoes.", "Sunglasses, gloves, and a sweatshirt.", "Earplugs, a face mask, and shorts."], correctAnswer: 0 },
+                        { question: "What is the alarm signal for a site evacuation?", options: ["3 short blasts.", "1 long, continuous blast.", "A loud bell ringing."], correctAnswer: 1 },
+                        { question: "Where is the designated muster point in case of an evacuation?", options: ["In the parking lot.", "In front of the site office.", "Across the street by the toilets."], correctAnswer: 1 },
+                        { question: "What should you do if you witness any incident, injury, or near miss?", options: ["Ignore it if it's minor.", "Only tell a coworker.", "Report it to your supervisor IMMEDIATELY."], correctAnswer: 2 },
+                        { question: "If you believe a job is unsafe, what is your right?", options: ["You must do it anyway.", "You have the right to refuse it and must tell your supervisor immediately.", "You can ask a coworker to do it instead."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Next",
+                    submitButton: "Submit Quiz",
+                    resultsTitle: "Quiz Results",
+                    resultsText: (score, total) => `You scored ${score} out of ${total}.`,
+                    passedTitle: "Congratulations, You Passed!",
+                    passedMessage: "To finalize your orientation, please register your details.",
+                    failedTitle: "Review Needed",
+                    finishButton: "Go to Registration Form",
+                    retakeButton: "Retake Quiz"
+                },
+                 messages: {
+                    reviewPrevious: "Please review the previous section first.",
+                    selectAnswer: "Please select an answer.",
+                    reviewAll: "Please review all sections before starting the quiz.",
+                    orientationComplete: "Orientation complete. Welcome to the site!"
+                }
+            },
+            es: {
+                mainTitle: "Orientación del Sitio WDC",
+                welcomeMessage: "Bienvenido al sitio de construcción de WDC. Por favor, revise la siguiente información cuidadosamente por su seguridad y para cumplir con las reglas del sitio.",
+                rightsHeader: "Sus Derechos y Obligaciones",
+                rightsSubheader: "Sus Derechos como Trabajador:",
+                rightToKnow: "<strong>Derecho a Saber:</strong> Tiene derecho a saber sobre los peligros en su lugar de trabajo y recibir la capacitación necesaria para protegerse.",
+                rightToParticipate: "<strong>Derecho a Participar:</strong> Tiene derecho a dar su opinión para identificar y resolver problemas de seguridad en el sitio.",
+                rightToRefuse: "<strong>Derecho a Negarse a Trabajos Peligrosos:</strong> Si cree que un trabajo es peligroso para usted u otros, tiene derecho a negarse a hacerlo. Debe informar a su supervisor de inmediato.",
+                obligationsSubheader: "Sus Obligaciones como Trabajador:",
+                obligationWorkSafely: "<strong>Trabajar con Seguridad:</strong> Debe seguir todas las reglas y procedimientos de seguridad de la compañía.",
+                obligationUsePpe: "<strong>Usar su EPP:</strong> Es su deber usar correctamente el casco, los zapatos con punta de acero, el chaleco y cualquier otro equipo de protección que se le proporcione.",
+                obligationReportHazards: "<strong>Reportar Peligros:</strong> Si ve algo inseguro, infórmelo a su supervisor de inmediato.",
+                obligationNoDisable: "<strong>No Desactivar Dispositivos de Seguridad:</strong> Está prohibido quitar o desactivar cualquier barandilla o dispositivo de seguridad. <strong class='text-orange-500'>Esto incluye la cinta de Peligro/Precaución. No entre ni quite la cinta, ya que marca una zona de control donde aún puede existir un peligro, incluso si nadie está trabajando.</strong>",
+                obligationCooperate: "<strong>Cooperar con Todos:</strong> Debe colaborar con su empleador y compañeros de trabajo en todos los asuntos de seguridad.",
+                obligationTraining: "<strong>Asistir a la Capacitación:</strong> Debe asistir y participar en toda la capacitación de seguridad.",
+                obligationHarassment: "<strong>Política de Acoso y Violencia:</strong> WDC se compromete a un lugar de trabajo seguro y respetuoso. El acoso, la intimidación y la violencia no se toleran. Reporte cualquier incidente a su supervisor de inmediato. Todos los reportes serán investigados de manera rápida y confidencial.",
+                emergencyContactsHeader: "Contactos de Emergencia",
+                contactCso: "<strong>CSO y Primeros Auxilios:</strong> Bethzy Hernandez - 604 906 0247",
+                contactFirstAidAlt1: "<strong>Suplente de Primeros Auxilios:</strong> Dan McGuire - 604 938 4354",
+                contactFirstAidAlt2: "<strong>Suplente de Primeros Auxilios:</strong> Dan Evans - 604 999 2847",
+                contactRadio: "El encargado de primeros auxilios de turno siempre tiene un radio en el Canal 10.",
+                downloadContact: "Descargar",
+                hazardsHeader: "Peligros del Sitio",
+                hazardMobileEquipment: "<strong>Equipo Móvil:</strong><ul class='list-circle pl-5'><li>Siempre haga contacto visual con el operador antes de acercarse.</li><li>Nunca se pare detrás de la maquinaria o debajo de cargas suspendidas.</li></ul>",
+                hazardBlasting: "<strong>Voladuras:</strong><ul class='list-circle pl-5'><li>Escuche las sirenas de aire. Sonarán 12 veces antes de una voladura y 1 vez después.</li></ul>",
+                hazardAlarm: "<strong>Señales de Alarma (Sirena de Aire):</strong><ul class='list-circle pl-5'><li><strong>Primeros Auxilios:</strong> 3 toques cortos.</li><li><strong>Evacuación del Sitio:</strong> 1 toque largo y continuo.</li></ul>",
+                hazardFirstAid: "<strong>Ubicación de Primeros Auxilios:</strong> En el tráiler del sitio de WDC.",
+                hazardMusterPoint: "<strong>Punto de Reunión para Evacuación:</strong> Frente a la oficina del sitio. Permanezca allí hasta que se le tome en cuenta. No se vaya.",
+                hazardWildlife: "<strong>Fauna Silvestre (Osos, etc.):</strong><ul class='list-circle pl-5'><li>No deje restos de comida en el sitio. Si trae comida, debe llevarse toda la basura al irse, incluyendo envoltorios y vasos de café desechables.</li><li>Los contenedores de basura del sitio son solo para residuos de construcción.</li><li>No se acerque ni alimente a la fauna silvestre.</li></ul>",
+                hazardHeights: "<strong>Trabajos en Altura:</strong><ul class='list-circle pl-5'><li>Use barandillas o un arnés de seguridad si trabaja a más de 10 pies (3 metros) de altura.</li><li>Manténgase a 6 pies (2 metros) de distancia de cualquier borde sin protección.</li><li><strong class='text-red-600'>MUY IMPORTANTE - BARANDILLAS:</strong> Las barandillas son su principal protección contra caídas. Si se quita una barandilla para una tarea, es OBLIGATORIO usar un arnés. La barandilla DEBE reinstalarse tan pronto como se complete el trabajo o el área quede desatendida. Si ve una abertura sin barandilla, REPÓRTELO a su supervisor INMEDIATAMENTE. ¡Su seguridad y la de sus compañeros dependen de ello!</li></ul>",
+                hazardWhmis: "<strong>Materiales Peligrosos (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC almacena materiales peligrosos en el cuarto cerrado (lock room) y en el contenedor marítimo rojo (Red Sea Can). Un código QR para acceder a las Hojas de Datos de Seguridad (SDS) está disponible en estos lugares.</li><li>Como subcontratista, su supervisor directo le informará la ubicación de sus productos peligrosos específicos.</li></ul>",
+                hazardExtinguishers: "<strong>Extintores de Incendios:</strong> Se encuentran dos extintores en cada nivel de cada edificio y estacionamiento. Los procedimientos de emergencia también se encuentran en estos lugares.",
+                rulesHeader: "Reglas Generales del Sitio",
+                rulesList: [
+                    "DEBE usar SIEMPRE un chaleco de alta visibilidad, casco y zapatos con punta de acero.",
+                    "Use protección auditiva cuando utilice equipo ruidoso.",
+                    "Use gafas de seguridad cuando su trabajo pueda generar polvo, chispas o salpicaduras.",
+                    "Se permiten audífonos, pero usar la <strong>función de cancelación de ruido está prohibido</strong>. Debe poder escuchar su entorno.",
+                    "No puede operar ninguna maquinaria a menos que esté autorizado y capacitado.",
+                    "<strong class='text-blue-600'>Antes de comenzar a trabajar, DEBE presentar al Oficial de Seguridad de la Construcción (CSO) del sitio un comprobante de certificación válida (tickets) para operar cualquier Equipo Móvil (por ejemplo, montacargas, elevador de pluma), Grúas o para Protección contra Caídas. El CSO guardará una copia. No se le permitirá realizar estas tareas sin él.</strong>",
+                    "El alcohol y las drogas están estrictamente prohibidos en el sitio.",
+                    "Reporte TODOS los incidentes, sin importar cuán pequeños sean.",
+                    "Reporte cualquier derrame de combustible o aceite de inmediato.",
+                    "Estacione únicamente en las áreas designadas.",
+                    "No estacione frente a la oficina del sitio. Esos espacios son solo para el personal de WDC.",
+                    "Los baños portátiles están al lado de la oficina del sitio. Los baños con descarga de agua están cruzando la calle.",
+                    "El agua de los baños con descarga NO es potable. Hay agua potable disponible en un grifo en el Edificio 1 (ubicado entre el Edificio 1 y 2).",
+                    "Solo el personal autorizado puede ingresar al área de voladuras.",
+                    "No se permiten perros en el sitio.",
+                    "<strong>Cada equipo debe limpiar su propia área de trabajo diariamente.</strong>",
+                    "No se tolerarán los juegos bruscos ni las bromas que pongan en peligro a otros.",
+                    "<strong>El acoso, la intimidación y la violencia tienen tolerancia cero.</strong> Reporte cualquier incidente de inmediato a su supervisor y/o al CSO.",
+                    "Fumar o vapear solo se permite en las áreas designadas para fumar."
+                ],
+                startQuizButton: "Comenzar Cuestionario",
+                quiz: {
+                    questionBank: [
+                        { question: "¿Cuáles son las tres piezas esenciales de EPP que DEBE usar SIEMPRE en el sitio?", options: ["Casco, chaleco de alta visibilidad y zapatos con punta de acero.", "Gafas de sol, guantes y una sudadera.", "Tapones para los oídos, una mascarilla y pantalones cortos."], correctAnswer: 0 },
+                        { question: "¿Cuál es la señal de alarma para una evacuación del sitio?", options: ["3 toques cortos.", "1 toque largo y continuo.", "Una campana sonando fuerte."], correctAnswer: 1 },
+                        { question: "¿Dónde está el punto de reunión designado en caso de evacuación?", options: ["En el estacionamiento.", "Frente a la oficina del sitio.", "Al otro lado de la calle, junto a los baños."], correctAnswer: 1 },
+                        { question: "¿Qué debe hacer si presencia algún incidente, lesión o casi accidente?", options: ["Ignorarlo si es menor.", "Solo contárselo a un compañero de trabajo.", "Reportarlo a su supervisor INMEDIATAMENTE."], correctAnswer: 2 },
+                        { question: "Si cree que un trabajo es inseguro, ¿cuál es su derecho?", options: ["Debe hacerlo de todos modos.", "Tiene derecho a negarse y debe informar a su supervisor de inmediato.", "Puede pedirle a un compañero de trabajo que lo haga en su lugar."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Siguiente",
+                    submitButton: "Enviar Cuestionario",
+                    resultsTitle: "Resultados del Cuestionario",
+                    resultsText: (score, total) => `Obtuvo ${score} de ${total}.`,
+                    passedTitle: "¡Felicidades, ha aprobado!",
+                    passedMessage: "Para finalizar su orientación, por favor registre sus datos.",
+                    failedTitle: "Necesita Revisión",
+                    finishButton: "Ir al Formulario de Registro",
+                    retakeButton: "Reintentar Cuestionario"
+                },
+                messages: {
+                    reviewPrevious: "Por favor, revise la sección anterior primero.",
+                    selectAnswer: "Por favor, seleccione una respuesta.",
+                    reviewAll: "Por favor, revise todas las secciones antes de comenzar el cuestionario.",
+                    orientationComplete: "¡Orientación completada. ¡Bienvenido al sitio!"
+                }
+            },
+            fr: {
+                mainTitle: "Orientation de Chantier WDC",
+                welcomeMessage: "Bienvenue sur le chantier de construction de WDC. Veuillez lire attentivement les informations suivantes pour votre sécurité et le respect des règles du chantier.",
+                rightsHeader: "Vos Droits et Obligations",
+                rightsSubheader: "Vos Droits en tant que Travailleur :",
+                rightToKnow: "<strong>Droit de Savoir :</strong> Vous avez le droit de connaître les dangers sur votre lieu de travail et de recevoir la formation nécessaire pour vous proteger.",
+                rightToParticipate: "<strong>Droit de Participer :</strong> Vous avez le droit de donner votre avis pour identifier et résoudre les problèmes de sécurité sur le chantier.",
+                rightToRefuse: "<strong>Droit de Refuser un Travail Dangereux :</strong> Si vous estimez qu'un travail est dangereux pour vous ou pour d'autres, vous avez le droit de le refuser. Vous devez en informer immédiatement votre superviseur.",
+                obligationsSubheader: "Vos Obligations en tant que Travailleur :",
+                obligationWorkSafely: "<strong>Travailler en toute sécurité :</strong> Vous devez suivre toutes les règles et procédures de sécurité de l'entreprise.",
+                obligationUsePpe: "<strong>Utiliser votre EPI :</strong> Il est de votre devoir d'utiliser correctamente le casque, les chaussures à embout d'acier, le gilet et tout autre équipement de protection fourni.",
+                obligationReportHazards: "<strong>Signaler les Dangers :</strong> Si vous voyez quelque chose de dangereux, signalez-le immédiatement à votre superviseur.",
+                obligationNoDisable: "<strong>Ne pas désactiver les dispositifs de sécurité :</strong> Il est interdit de retirer ou de désactiver tout garde-corps ou dispositif de sécurité. <strong class='text-orange-500'>Cela inclut le ruban de Danger/Attention. N'entrez pas et ne retirez pas le ruban car il délimite une zone de contrôle où un danger peut encore être présent, même si personne ne travaille.</strong>",
+                obligationCooperate: "<strong>Coopérer avec tout le monde :</strong> Vous devez collaborer avec votre employeur et vos collègues sur toutes les questions de sécurité.",
+                obligationTraining: "<strong>Assister à la formation :</strong> Vous devez assister et participer à toutes les formations sur la sécurité.",
+                obligationHarassment: "<strong>Politique sur le harcèlement et la violence :</strong> WDC s'engage à offrir un lieu de travail sûr et respectueux. L'intimidation, le harcèlement et la violence ne sont pas tolérés. Signalez tout incident à votre superviseur immédiatement. Tous les rapports feront l'objet d'une enquête rapide et confidentielle.",
+                emergencyContactsHeader: "Contacts d'Urgence",
+                contactCso: "<strong>CSO et Premiers Soins :</strong> Bethzy Hernandez - 604 906 0247",
+                contactFirstAidAlt1: "<strong>Remplaçant Premiers Soins :</strong> Dan McGuire - 604 938 4354",
+                contactFirstAidAlt2: "<strong>Remplaçant Premiers Soins :</strong> Dan Evans - 604 999 2847",
+                contactRadio: "Le secouriste de service a toujours une radio sur le canal 10.",
+                downloadContact: "Télécharger",
+                hazardsHeader: "Dangers sur le Chantier",
+                hazardMobileEquipment: "<strong>Équipement Mobile :</strong><ul class='list-circle pl-5'><li>Établissez toujours un contact visuel avec l'opérateur avant de vous approcher.</li><li>Ne vous tenez jamais derrière une machine ou sous des charges suspendues.</li></ul>",
+                hazardBlasting: "<strong>Dynamitage :</strong><ul class='list-circle pl-5'><li>Écoutez les klaxons. Ils sonneront 12 fois avant une explosion et 1 fois après.</li></ul>",
+                hazardAlarm: "<strong>Signaux d'Alarme (Corne à air) :</strong><ul class='list-circle pl-5'><li><strong>Premiers Soins :</strong> 3 coups brefs.</li><li><strong>Évacuation du Site :</strong> 1 coup long et continu.</li></ul>",
+                hazardFirstAid: "<strong>Emplacement des Premiers Soins :</strong> Dans la roulotte de chantier WDC.",
+                hazardMusterPoint: "<strong>Point de Rassemblement pour l'Évacuation :</strong> Devant le bureau du chantier. Restez-y jusqu'à ce que votre présence soit confirmée. Ne partez pas.",
+                hazardWildlife: "<strong>Faune (Ours, etc.) :</strong><ul class='list-circle pl-5'><li>Ne laissez pas de déchets alimentaires sur le site. Si vous apportez de la nourriture, vous devez emporter tous vos déchets en partant, y compris les emballages et les tasses à café jetables.</li><li>Les poubelles du site sont réservées aux déchets de construction.</li><li>N'approchez pas et ne nourrissez pas les animaux sauvages.</li></ul>",
+                hazardHeights: "<strong>Travail en Hauteur :</strong><ul class='list-circle pl-5'><li>Utilisez des garde-corps ou un harnais de sécurité si vous travaillez à plus de 10 pieds (3 mètres) de hauteur.</li><li>Restez à 6 pieds (2 mètres) de tout bord non protégé.</li><li><strong class='text-red-600'>TRÈS IMPORTANT - GARDE-CORPS :</strong> Les garde-corps sont votre principale protection contre les chutes. Si un garde-corps est retiré pour une tâche, le port d'un harnais est OBLIGATOIRE. Le garde-corps DOIT être réinstallé dès que le travail est terminé ou que la zone est laissée sans surveillance. Si vous voyez une ouverture sans garde-corps, SIGNALEZ-LE à votre superviseur IMMÉDIATEMENT. Votre sécurité et celle de vos collègues en dépendent !</li></ul>",
+                hazardWhmis: "<strong>Matières Dangereuses (SIMDUT) :</strong><ul class='list-circle pl-5'><li>WDC entrepose les matières dangereuses dans le local verrouillé et le conteneur maritime rouge. Un code QR pour accéder aux fiches de données de sécurité (FDS) est disponible à ces endroits.</li><li>En tant que sous-traitant, votre superviseur direct vous informera de l'emplacement de vos produits dangereux spécifiques.</li></ul>",
+                hazardExtinguishers: "<strong>Extincteurs :</strong> Deux extincteurs se trouvent à chaque niveau de chaque bâtiment et parking. Les procédures d'urgence sont également affichées à ces endroits.",
+                rulesHeader: "Règles Générales du Chantier",
+                rulesList: [
+                    "Vous devez TOUJOURS porter un gilet de haute visibilité, un casque et des chaussures à embout d'acier.",
+                    "Portez une protection auditive lorsque vous utilisez des équipements bruyants.",
+                    "Portez des lunettes de sécurité lorsque votre travail peut créer de la poussière, des étincelles ou des éclaboussures.",
+                    "Les écouteurs sont autorisés, mais l'utilisation de la <strong>fonction de réduction du bruit est interdite</strong>. Vous devez être capable d'entendre votre environnement.",
+                    "Vous ne pouvez pas utiliser de machines sans y être autorisé et formé.",
+                    "<strong class='text-blue-600'>Avant de commencer à travailler, vous DEVEZ présenter au Responsable de la Sécurité sur le Chantier (CSO) une preuve de certification valide (permis) pour l'utilisation de tout Équipement Mobile (par ex., chariot élévateur, nacelle), Grues, ou pour la Protection contre les Chutes. Le CSO en gardera une copie. Vous ne serez pas autorisé à effectuer ces tâches sans cela.</strong>",
+                    "L'alcool et les drogues sont strictement interdits sur le chantier.",
+                    "Signalez TOUS les incidents, aussi mineurs soient-ils.",
+                    "Signalez immédiatement toute fuite de carburant ou d'huile.",
+                    "Garez-vous uniquement dans les zones désignées.",
+                    "Ne vous garez pas devant le bureau du chantier. Ces places sont réservées au personnel de WDC.",
+                    "Les toilettes portables se trouvent à côté du bureau du chantier. Les toilettes avec chasse d'eau sont de l'autre côté de la rue.",
+                    "L'eau des toilettes avec chasse d'eau N'EST PAS potable. De l'eau potable est disponible à un robinet sur le Bâtiment 1 (situé entre le Bâtiment 1 et 2).",
+                    "Seul le personnel autorisé est admis dans la zone de dynamitage.",
+                    "Les chiens ne sont pas autorisés sur le chantier.",
+                    "<strong>Chaque équipe doit nettoyer sa propre zone de travail quotidiennement.</strong>",
+                    "Les bousculades et les blagues qui mettent les autres en danger ne sont pas tolérées.",
+                    "<strong>Le harcèlement, l'intimidation et la violence font l'objet d'une tolérance zéro.</strong> Signalez tout incident immédiatement à votre superviseur et/ou au CSO.",
+                    "Il est permis de fumer ou de vapoter uniquement dans les zones fumeurs désignées."
+                ],
+                startQuizButton: "Commencer le Quiz",
+                quiz: {
+                    questionBank: [
+                        { question: "Quels sont les trois équipements de protection individuelle (EPI) essentiels que vous devez TOUJOURS porter sur le chantier ?", options: ["Casque, gilet de haute visibilité et chaussures à embout d'acier.", "Lunettes de soleil, gants et sweat-shirt.", "Bouchons d'oreilles, masque facial et short."], correctAnswer: 0 },
+                        { question: "Quel est le signal d'alarme pour une évacuation du site ?", options: ["3 coups brefs.", "1 coup long et continu.", "Une cloche qui sonne fort."], correctAnswer: 1 },
+                        { question: "Où se trouve le point de rassemblement désigné en cas d'évacuation ?", options: ["Sur le parking.", "Devant le bureau du chantier.", "De l'autre côté de la rue, près des toilettes."], correctAnswer: 1 },
+                        { question: "Que devez-vous faire si vous êtes témoin d'un incident, d'une blessure ou d'un quasi-accident ?", options: ["L'ignorer s'il est mineur.", "N'en parler qu'à un collègue.", "Le signaler IMMÉDIATEMENT à votre superviseur."], correctAnswer: 2 },
+                        { question: "Si vous pensez qu'un travail est dangereux, quel est votre droit ?", options: ["Vous devez le faire quand même.", "Vous avez le droit de le refuser et devez en informer immédiatement votre superviseur.", "Vous pouvez demander à un collègue de le faire à votre place."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Suivant",
+                    submitButton: "Soumettre le Quiz",
+                    resultsTitle: "Résultats du Quiz",
+                    resultsText: (score, total) => `Vous avez obtenu ${score} sur ${total}.`,
+                    passedTitle: "Félicitations, vous avez réussi !",
+                    passedMessage: "Pour finaliser votre orientation, veuillez enregistrer vos coordonnées.",
+                    failedTitle: "Révision Nécessaire",
+                    finishButton: "Aller au Formulaire d'Enregistrement",
+                    retakeButton: "Recommencer le Quiz"
+                },
+                messages: {
+                    reviewPrevious: "Veuillez d'abord consulter la section précédente.",
+                    selectAnswer: "Veuillez sélectionner une réponse.",
+                    reviewAll: "Veuillez consulter toutes les sections avant de commencer le quiz.",
+                    orientationComplete: "Orientation terminée. Bienvenue sur le site !"
+                }
+            },
+            ru: {
+                mainTitle: "Инструктаж на Объекте WDC",
+                welcomeMessage: "Добро пожаловать на строительный объект WDC. Пожалуйста, внимательно ознакомьтесь с информацией для вашей безопасности и соблюдения правил.",
+                rightsHeader: "Ваши Права и Обязанности",
+                rightsSubheader: "Ваши Права как Работника:",
+                rightToKnow: "<strong>Право Знать:</strong> Вы имеете право знать об опасностях на рабочем месте и получать необходимое обучение для защиты.",
+                rightToParticipate: "<strong>Право Участвовать:</strong> Вы имеете право участвовать в выявлении и решении проблем безопасности на объекте.",
+                rightToRefuse: "<strong>Право на Отказ от Опасной Работы:</strong> Если вы считаете, что работа опасна для вас или других, вы имеете право отказаться. Немедленно сообщите об этом своему руководителю.",
+                obligationsSubheader: "Ваши Обязанности как Работника:",
+                obligationWorkSafely: "<strong>Безопасная Работа:</strong> Вы должны соблюдать все правила и процедуры безопасности компании.",
+                obligationUsePpe: "<strong>Использовать СИЗ:</strong> Ваша обязанность — правильно использовать каску, обувь со стальным носком, жилет и другое защитное снаряжение.",
+                obligationReportHazards: "<strong>Сообщать об Опасностях:</strong> Если вы видите что-либо небезопасное, немедленно сообщите своему руководителю.",
+                obligationNoDisable: "<strong>Не отключать защитные устройства:</strong> Запрещено снимать или отключать любые ограждения или защитные устройства. <strong class='text-orange-500'>Это включает ленту «Опасно/Внимание». Не входите и не снимайте ленту, так как она обозначает зону контроля, где опасность все еще может присутствовать, даже если никто не работает.</strong>",
+                obligationCooperate: "<strong>Сотрудничать со всеми:</strong> Вы должны сотрудничать с работодателем и коллегами по всем вопросам безопасности.",
+                obligationTraining: "<strong>Посещать Обучение:</strong> Вы должны посещать и участвовать во всех тренингах по безопасности.",
+                obligationHarassment: "<strong>Политика в отношении домогательств и насилия:</strong> WDC стремится к созданию безопасного и уважительного рабочего места. Издевательства, домогательства и насилие недопустимы. Немедленно сообщайте о любых инцидентах своему руководителю. Все сообщения будут расследованы оперативно и конфиденциально.",
+                emergencyContactsHeader: "Экстренные Контакты",
+                contactCso: "<strong>CSO и Первая Помощь:</strong> Бетси Эрнандес - 604 906 0247",
+                contactFirstAidAlt1: "<strong>Запасной по Первой Помощи:</strong> Дэн МакГуайр - 604 938 4354",
+                contactFirstAidAlt2: "<strong>Запасной по Первой Помощи:</strong> Дэн Эванс - 604 999 2847",
+                contactRadio: "Дежурный по оказанию первой помощи всегда имеет радио на 10-м канале.",
+                downloadContact: "Скачать",
+                hazardsHeader: "Опасности на Объекте",
+                hazardMobileEquipment: "<strong>Мобильная Техника:</strong><ul class='list-circle pl-5'><li>Всегда устанавливайте зрительный контакт с оператором, прежде чем приблизиться.</li><li>Никогда не стойте за техникой или под подвешенными грузами.</li></ul>",
+                hazardBlasting: "<strong>Взрывные Работы:</strong><ul class='list-circle pl-5'><li>Слушайте звуковые сигналы. Они прозвучат 12 раз перед взрывом и 1 раз после.</li></ul>",
+                hazardAlarm: "<strong>Сигналы Тревоги (Воздушный гудок):</strong><ul class='list-circle pl-5'><li><strong>Первая Помощь:</strong> 3 коротких гудка.</li><li><strong>Эвакуация Объекта:</strong> 1 длинный, непрерывный гудок.</li></ul>",
+                hazardFirstAid: "<strong>Место Оказания Первой Помощи:</strong> В трейлере на объекте WDC.",
+                hazardMusterPoint: "<strong>Место Сбора при Эвакуации:</strong> Перед офисом объекта. Оставайтесь там, пока вас не отметят. Не уходите.",
+                hazardWildlife: "<strong>Дикие Животные (Медведи и т.д.):</strong><ul class='list-circle pl-5'><li>Не оставляйте пищевые отходы на объекте. Если вы приносите еду, вы должны забрать весь мусор с собой, включая обертки и одноразовые стаканчики.</li><li>Мусорные баки на объекте предназначены только для строительных отходов.</li><li>Не приближайтесь к диким животным и не кормите их.</li></ul>",
+                hazardHeights: "<strong>Работа на Высоте:</strong><ul class='list-circle pl-5'><li>Используйте ограждения или страховочный пояс при работе на высоте более 10 футов (3 метров).</li><li>Держитесь на расстоянии 6 футов (2 метров) от любого незащищенного края.</li><li><strong class='text-red-600'>ОЧЕНЬ ВАЖНО - ОГРАЖДЕНИЯ:</strong> Ограждения являются вашей основной защитой от падения. Если ограждение снимается для выполнения задачи, использование страховочного пояса ОБЯЗАТЕЛЬНО. Ограждение ДОЛЖНО быть установлено на место сразу после завершения работы или если участок остается без присмотра. Если вы видите проем без ограждения, НЕМЕДЛЕННО сообщите об этом своему руководителю. От этого зависит ваша безопасность и безопасность ваших коллег!</li></ul>",
+                hazardWhmis: "<strong>Опасные Материалы (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC хранит опасные материалы в запираемой комнате и в красном морском контейнере. QR-код для доступа к паспортам безопасности (SDS) доступен в этих местах.</li><li>Как субподрядчик, ваш непосредственный руководитель проинформирует вас о местонахождении ваших конкретных опасных продуктов.</li></ul>",
+                hazardExtinguishers: "<strong>Огнетушители:</strong> Два огнетушителя находятся на каждом уровне каждого здания и парковки. Процедуры на случай чрезвычайной ситуации также размещены в этих местах.",
+                rulesHeader: "Общие Правила на Объекте",
+                rulesList: [
+                    "Вы ВСЕГДА должны носить светоотражающий жилет, каску и обувь со стальным носком.",
+                    "Используйте средства защиты слуха при работе с шумным оборудованием.",
+                    "Используйте защитные очки, когда ваша работа может создавать пыль, искры или брызги.",
+                    "Наушники разрешены, но использование <strong>функции шумоподавления запрещено</strong>. Вы должны слышать, что происходит вокруг.",
+                    "Вы не можете управлять техникой без разрешения и обучения.",
+                    "<strong class='text-blue-600'>Перед началом работы вы ДОЛЖНЫ предъявить Инспектору по Технике Безопасности (CSO) объекта подтверждение действующей сертификации (билеты) на управление любой Мобильной Техникой (например, вилочным погрузчиком, автовышкой), Кранами или для Работ на Высоте. CSO сохранит копию. Вам не будет разрешено выполнять эти задачи без этого.</strong>",
+                    "Алкоголь и наркотики на объекте строго запрещены.",
+                    "Сообщайте обо ВСЕХ инцидентах, какими бы незначительными они ни были.",
+                    "Немедленно сообщайте о любых разливах топлива или масла.",
+                    "Паркуйтесь только в специально отведенных местах.",
+                    "Не паркуйтесь перед офисом объекта. Эти места только для персонала WDC.",
+                    "Переносные туалеты находятся рядом с офисом объекта. Туалеты со смывом — через дорогу.",
+                    "Вода в туалетах со смывом НЕ является питьевой. Питьевая вода доступна из крана на Здании 1 (между Зданием 1 и 2).",
+                    "Только авторизованный персонал может находиться в зоне проведения взрывных работ.",
+                    "Собаки на объекте запрещены.",
+                    "<strong>Каждая бригада должна ежедневно убирать свою рабочую зону.</strong>",
+                    "Игры и шутки, угрожающие безопасности других, не допускаются.",
+                    "<strong>Домогательства, издевательства и насилие абсолютно недопустимы (нулевая толерантность).</strong> Немедленно сообщайте о любых инцидентах своему руководителю и/или CSO.",
+                    "Курение или вейпинг разрешены только в специально отведенных местах."
+                ],
+                startQuizButton: "Начать Тест",
+                quiz: {
+                    questionBank: [
+                        { question: "Какие три обязательных средства индивидуальной защиты (СИЗ) вы должны ВСЕГДА носить на объекте?", options: ["Каска, светоотражающий жилет и обувь со стальным носком.", "Солнцезащитные очки, перчатки и толстовка.", "Беруши, маска и шорты."], correctAnswer: 0 },
+                        { question: "Какой сигнал тревоги используется для эвакуации с объекта?", options: ["3 коротких гудка.", "1 длинный, непрерывный гудок.", "Громкий звонок."], correctAnswer: 1 },
+                        { question: "Где находится назначенное место сбора в случае эвакуации?", options: ["На парковке.", "Перед офисом объекта.", "Через дорогу у туалетов."], correctAnswer: 1 },
+                        { question: "Что следует делать, если вы стали свидетелем инцидента, травмы или опасной ситуации?", options: ["Игнорировать, если это мелочь.", "Рассказать только коллеге.", "НЕМЕДЛЕННО сообщить своему руководителю."], correctAnswer: 2 },
+                        { question: "Если вы считаете, что работа небезопасна, какое у вас есть право?", options: ["Вы должны выполнить ее в любом случае.", "У вас есть право отказаться и немедленно сообщить своему руководителю.", "Вы можете попросить коллегу сделать это вместо вас."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Далее",
+                    submitButton: "Отправить Тест",
+                    resultsTitle: "Результаты Теста",
+                    resultsText: (score, total) => `Вы набрали ${score} из ${total}.`,
+                    passedTitle: "Поздравляем, вы прошли!",
+                    passedMessage: "Для завершения инструктажа, пожалуйста, зарегистрируйте ваши данные.",
+                    failedTitle: "Требуется Повторение",
+                    finishButton: "Перейти к Форме Регистрации",
+                    retakeButton: "Пройти Тест Снова"
+                },
+                messages: {
+                    reviewPrevious: "Пожалуйста, сначала ознакомьтесь с предыдущим разделом.",
+                    selectAnswer: "Пожалуйста, выберите ответ.",
+                    reviewAll: "Пожалуйста, ознакомьтесь со всеми разделами перед началом теста.",
+                    orientationComplete: "Инструктаж завершен. Добро пожаловать на объект!"
+                }
+            },
+            de: {
+                mainTitle: "WDC Baustelleneinweisung",
+                welcomeMessage: "Willkommen auf der WDC-Baustelle. Bitte lesen Sie die folgenden Informationen sorgfältig für Ihre Sicherheit und zur Einhaltung der Baustellenregeln.",
+                rightsHeader: "Ihre Rechte und Pflichten",
+                rightsSubheader: "Ihre Rechte als Arbeitnehmer:",
+                rightToKnow: "<strong>Recht auf Information:</strong> Sie haben das Recht, über Gefahren an Ihrem Arbeitsplatz informiert zu werden und die notwendige Schulung zu erhalten, um sich zu schützen.",
+                rightToParticipate: "<strong>Recht на Mitwirkung:</strong> Sie haben das Recht, bei der Identifizierung und Lösung von Sicherheitsproblemen auf der Baustelle mitzuwirken.",
+                rightToRefuse: "<strong>Recht, unsichere Arbeit zu verweigern:</strong> Wenn Sie glauben, dass eine Arbeit für Sie oder andere gefährlich ist, haben Sie das Recht, sie zu verweigern. Sie müssen Ihren Vorgesetzten unverzüglich informieren.",
+                obligationsSubheader: "Ihre Pflichten als Arbeitnehmer:",
+                obligationWorkSafely: "<strong>Sicher arbeiten:</strong> Sie müssen alle Sicherheitsregeln und -verfahren des Unternehmens befolgen.",
+                obligationUsePpe: "<strong>Ihre PSA verwenden:</strong> Es ist Ihre Pflicht, Helm, Stahlkappenschuhe, Weste und jede andere Schutzausrüstung korrekt zu verwenden.",
+                obligationReportHazards: "<strong>Gefahren melden:</strong> Wenn Sie etwas Unsicheres sehen, melden Sie es sofort Ihrem Vorgesetzten.",
+                obligationNoDisable: "<strong>Sicherheitsvorrichtungen nicht deaktivieren:</strong> Es ist verboten, Geländer oder Sicherheitsvorrichtungen zu entfernen oder zu deaktivieren. <strong class='text-orange-500'>Dies schließt Gefahren-/Vorsichts-Absperrbänder ein. Betreten oder entfernen Sie das Band nicht, da es eine Kontrollzone markiert, in der auch dann eine Gefahr bestehen kann, wenn niemand arbeitet.</strong>",
+                obligationCooperate: "<strong>Mit allen kooperieren:</strong> Sie müssen mit Ihrem Arbeitgeber und Ihren Kollegen in allen Sicherheitsfragen zusammenarbeiten.",
+                obligationTraining: "<strong>An Schulungen teilnehmen:</strong> Sie müssen an allen Sicherheitsschulungen teilnehmen.",
+                obligationHarassment: "<strong>Richtlinie zu Belästigung und Gewalt:</strong> WDC verpflichtet sich zu einem sicheren, respektvollen Arbeitsplatz. Mobbing, Belästigung und Gewalt werden nicht toleriert. Melden Sie alle Vorfälle unverzüglich Ihrem Vorgesetzten. Alle Meldungen werden umgehend und vertraulich untersucht.",
+                emergencyContactsHeader: "Notfallkontakte",
+                contactCso: "<strong>CSO und Erste Hilfe:</strong> Bethzy Hernandez - 604 906 0247",
+                contactFirstAidAlt1: "<strong>Erste-Hilfe-Vertretung:</strong> Dan McGuire - 604 938 4354",
+                contactFirstAidAlt2: "<strong>Erste-Hilfe-Vertretung:</strong> Dan Evans - 604 999 2847",
+                contactRadio: "Der diensthabende Ersthelfer hat immer ein Funkgerät auf Kanal 10.",
+                downloadContact: "Herunterladen",
+                hazardsHeader: "Gefahren auf der Baustelle",
+                hazardMobileEquipment: "<strong>Mobile Geräte:</strong><ul class='list-circle pl-5'><li>Stellen Sie immer Blickkontakt mit dem Bediener her, bevor Sie sich nähern.</li><li>Stellen Sie sich niemals hinter Maschinen oder unter schwebende Lasten.</li></ul>",
+                hazardBlasting: "<strong>Sprengungen:</strong><ul class='list-circle pl-5'><li>Achten Sie auf die Lufthörner. Sie ertönen 12 Mal vor einer Sprengung und 1 Mal danach.</li></ul>",
+                hazardAlarm: "<strong>Alarmsignale (Lufthorn):</strong><ul class='list-circle pl-5'><li><strong>Erste Hilfe:</strong> 3 kurze Signale.</li><li><strong>Evakuierung des Geländes:</strong> 1 langes, ununterbrochenes Signal.</li></ul>",
+                hazardFirstAid: "<strong>Standort Erste Hilfe:</strong> Im WDC-Baustellencontainer.",
+                hazardMusterPoint: "<strong>Sammelpunkt für die Evakuierung:</strong> Vor dem Baustellenbüro. Bleiben Sie dort, bis Sie erfasst wurden. Gehen Sie nicht weg.",
+                hazardWildlife: "<strong>Wildtiere (Bären usw.):</strong><ul class='list-circle pl-5'><li>Lassen Sie keine Essensreste auf der Baustelle. Wenn Sie Essen mitbringen, müssen Sie den gesamten Müll mitnehmen, wenn Sie gehen, einschließlich Verpackungen und Einweg-Kaffeebecher.</li><li>Die Mülltonnen auf der Baustelle sind nur für Bauschutt.</li><li>Nähern Sie sich keinen Wildtieren und füttern Sie sie nicht.</li></ul>",
+                hazardHeights: "<strong>Arbeiten in der Höhe:</strong><ul class='list-circle pl-5'><li>Verwenden Sie Geländer oder einen Sicherheitsgurt, wenn Sie über 10 Fuß (3 Meter) hoch arbeiten.</li><li>Halten Sie 6 Fuß (2 Meter) Abstand zu ungeschützten Kanten.</li><li><strong class='text-red-600'>SEHR WICHTIG - GELÄNDER:</strong> Geländer sind Ihr primärer Fallschutz. Wenn ein Geländer für eine Aufgabe entfernt wird, ist das Tragen eines Gurtes OBLIGATORISCH. Das Geländer MUSS wieder angebracht werden, sobald die Arbeit beendet ist oder der Bereich unbeaufsichtigt bleibt. Wenn Sie eine Öffnung ohne Geländer sehen, MELDEN SIE DIES sofort Ihrem Vorgesetzten. Ihre Sicherheit und die Ihrer Kollegen hängt davon ab!</li></ul>",
+                hazardWhmis: "<strong>Gefahrstoffe (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC lagert Gefahrstoffe im verschlossenen Raum und im roten Seecontainer. Ein QR-Code für den Zugriff auf die Sicherheitsdatenblätter (SDB) ist an diesen Orten verfügbar.</li><li>Als Subunternehmer informiert Sie Ihr direkter Vorgesetzter über den Standort Ihrer spezifischen gefährlichen Produkte.</li></ul>",
+                hazardExtinguishers: "<strong>Feuerlöscher:</strong> Zwei Feuerlöscher befinden sich auf jeder Ebene jedes Gebäudes und Parkhauses. Notfallverfahren sind ebenfalls an diesen Orten ausgehängt.",
+                rulesHeader: "Allgemeine Baustellenregeln",
+                rulesList: [
+                    "Sie müssen IMMER eine Warnweste, einen Schutzhelm und Stahlkappenschuhe tragen.",
+                    "Tragen Sie Gehörschutz bei Arbeiten mit lauten Geräten.",
+                    "Tragen Sie eine Schutzbrille, wenn Ihre Arbeit Staub, Funken oder Spritzer verursachen kann.",
+                    "Kopfhörer sind erlaubt, aber die Verwendung der <strong>Geräuschunterdrückungsfunktion ist verboten</strong>. Sie müssen Ihre Umgebung hören können.",
+                    "Sie dürfen keine Maschinen bedienen, es sei denn, Sie sind dazu berechtigt und geschult.",
+                    "<strong class='text-blue-600'>Vor Arbeitsbeginn MÜSSEN Sie dem Baustellensicherheitsbeauftragten (CSO) einen Nachweis über eine gültige Zertifizierung (Tickets) für den Betrieb von mobilen Geräten (z.B. Gabelstapler, Hubarbeitsbühne), Kränen oder für den Fallschutz vorlegen. Der CSO wird eine Kopie aufbewahren. Ohne diesen Nachweis dürfen Sie diese Aufgaben nicht ausführen.</strong>",
+                    "Alkohol und Drogen sind auf der Baustelle strengstens verboten.",
+                    "Melden Sie ALLE Vorfälle, egal wie geringfügig.",
+                    "Melden Sie sofort alle Kraftstoff- oder Ölverschüttungen.",
+                    "Parken Sie nur auf ausgewiesenen Flächen.",
+                    "Parken Sie nicht vor dem Baustellenbüro. Diese Plätze sind nur für WDC-Mitarbeiter.",
+                    "Mobile Toiletten befinden sich neben dem Baustellenbüro. Toiletten mit Spülung sind auf der anderen Straßenseite.",
+                    "Das Wasser in den Spültoiletten ist KEIN Trinkwasser. Trinkwasser gibt es an einem Wasserhahn am Gebäude 1 (zwischen Gebäude 1 und 2).",
+                    "Nur autorisiertes Personal darf den Sprengbereich betreten.",
+                    "Hunde sind auf der Baustelle nicht erlaubt.",
+                    "<strong>Jedes Team muss täglich seinen eigenen Arbeitsbereich aufräumen.</strong>",
+                    "Späße und Streiche, die andere gefährden, werden nicht toleriert.",
+                    "<strong>Belästigung, Mobbing und Gewalt werden absolut nicht toleriert (Null-Toleranz).</strong> Melden Sie alle Vorfälle sofort Ihrem Vorgesetzten und/oder dem CSO.",
+                    "Rauchen oder Dampfen ist nur in den ausgewiesenen Raucherbereichen gestattet."
+                ],
+                startQuizButton: "Quiz starten",
+                quiz: {
+                    questionBank: [
+                        { question: "Welche drei wesentlichen Teile der persönlichen Schutzausrüstung (PSA) müssen Sie auf der Baustelle IMMER tragen?", options: ["Schutzhelm, Warnweste und Stahlkappenschuhe.", "Sonnenbrille, Handschuhe und ein Sweatshirt.", "Ohrstöpsel, eine Gesichtsmaske und Shorts."], correctAnswer: 0 },
+                        { question: "Was ist das Alarmsignal für eine Evakuierung des Geländes?", options: ["3 kurze Signale.", "1 langes, ununterbrochenes Signal.", "Ein lautes Klingeln."], correctAnswer: 1 },
+                        { question: "Wo ist der ausgewiesene Sammelpunkt im Falle einer Evakuierung?", options: ["Auf dem Parkplatz.", "Vor dem Baustellenbüro.", "Auf der anderen Straßenseite bei den Toiletten."], correctAnswer: 1 },
+                        { question: "Was sollten Sie tun, wenn Sie Zeuge eines Vorfalls, einer Verletzung oder eines Beinaheunfalls werden?", options: ["Ignorieren, wenn es geringfügig ist.", "Nur einem Kollegen erzählen.", "SOFORT Ihrem Vorgesetzten melden."], correctAnswer: 2 },
+                        { question: "Wenn Sie glauben, dass eine Arbeit unsicher ist, was ist Ihr Recht?", options: ["Sie müssen sie trotzdem ausführen.", "Sie haben das Recht, sie zu verweigern und müssen Ihren Vorgesetzten sofort informieren.", "Sie können einen Kollegen bitten, sie stattdessen zu erledigen."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Weiter",
+                    submitButton: "Quiz abschicken",
+                    resultsTitle: "Quiz-Ergebnisse",
+                    resultsText: (score, total) => `Sie haben ${score} von ${total} Punkten erreicht.`,
+                    passedTitle: "Herzlichen Glückwunsch, Sie haben bestanden!",
+                    passedMessage: "Um Ihre Einweisung abzuschließen, registrieren Sie bitte Ihre Daten.",
+                    failedTitle: "Überprüfung erforderlich",
+                    finishButton: "Zum Registrierungsformular",
+                    retakeButton: "Quiz wiederholen"
+                },
+                messages: {
+                    reviewPrevious: "Bitte überprüfen Sie zuerst den vorherigen Abschnitt.",
+                    selectAnswer: "Bitte wählen Sie eine Antwort aus.",
+                    reviewAll: "Bitte überprüfen Sie alle Abschnitte, bevor Sie mit dem Quiz beginnen.",
+                    orientationComplete: "Einweisung abgeschlossen. Willkommen auf der Baustelle!"
+                }
+            },
+            cs: {
+                mainTitle: "Instruktáž na Staveništi WDC",
+                welcomeMessage: "Vítejte na staveništi WDC. Přečtěte si prosím pečlivě následující informace pro vaši bezpečnost a dodržování pravidel.",
+                rightsHeader: "Vaše Práva a Povinnosti",
+                rightsSubheader: "Vaše Práva jako Pracovníka:",
+                rightToKnow: "<strong>Právo Vědět:</strong> Máte právo vědět o nebezpečích na pracovišti a obdržet školení potřebné k vaší ochraně.",
+                rightToParticipate: "<strong>Právo Účastnit se:</strong> Máte právo podílet se na identifikaci a řešení bezpečnostních problémů na staveništi.",
+                rightToRefuse: "<strong>Právo Odmítnout Nebezpečnou Práci:</strong> Pokud se domníváte, že je práce nebezpečná pro vás nebo ostatní, máte právo ji odmítnout. Musíte okamžitě informovat svého nadřízeného.",
+                obligationsSubheader: "Vaše Povinnosti jako Pracovníka:",
+                obligationWorkSafely: "<strong>Pracujte bezpečně:</strong> Musíte dodržovat všechna bezpečnostní pravidla a postupy společnosti.",
+                obligationUsePpe: "<strong>Používejte OOPP:</strong> Je vaší povinností správně používat přilbu, boty s ocelovou špičkou, vestu a další ochranné prostředky.",
+                obligationReportHazards: "<strong>Hlásit Nebezpečí:</strong> Pokud uvidíte něco nebezpečného, okamžitě to nahlaste svému nadřízenému.",
+                obligationNoDisable: "<strong>Neodstraňujte bezpečnostní zařízení:</strong> Je zakázáno odstraňovat nebo deaktivovat jakékoli zábradlí nebo bezpečnostní zařízení. <strong class='text-orange-500'>To zahrnuje pásku Nebezpečí/Pozor. Nevstupujte za pásku ani ji neodstraňujte, protože označuje kontrolní zónu, kde může stále hrozit nebezpečí, i když nikdo nepracuje.</strong>",
+                obligationCooperate: "<strong>Spolupracujte se všemi:</strong> Musíte spolupracovat se zaměstnavatelem a kolegy ve všech bezpečnostních záležitostech.",
+                obligationTraining: "<strong>Účastněte se školení:</strong> Musíte se účastnit všech bezpečnostních školení.",
+                obligationHarassment: "<strong>Politika proti obtěžování a násilí:</strong> WDC se zavazuje k bezpečnému a uctivému pracovišti. Šikana, obtěžování a násilí nejsou tolerovány. Jakékoli incidenty okamžitě nahlaste svému nadřízenému. Všechny zprávy budou neprodleně a důvěrně prošetřeny.",
+                emergencyContactsHeader: "Nouzové Kontakty",
+                contactCso: "<strong>CSO a První Pomoc:</strong> Bethzy Hernandez - 604 906 0247",
+                contactFirstAidAlt1: "<strong>Zástupce První Pomoci:</strong> Dan McGuire - 604 938 4354",
+                contactFirstAidAlt2: "<strong>Zástupce První Pomoci:</strong> Dan Evans - 604 999 2847",
+                contactRadio: "První pomocník ve službě má vždy rádio na kanále 10.",
+                downloadContact: "Stáhnout",
+                hazardsHeader: "Nebezpečí na Staveništi",
+                hazardMobileEquipment: "<strong>Mobilní Zařízení:</strong><ul class='list-circle pl-5'><li>Před přiblížením se vždy ujistěte, že máte oční kontakt s operátorem.</li><li>Nikdy nestůjte za stroji nebo pod zavěšenými břemeny.</li></ul>",
+                hazardBlasting: "<strong>Odstřely:</strong><ul class='list-circle pl-5'><li>Poslouchejte vzduchové houkačky. Zazní 12krát před odstřelem a 1krát po něm.</li></ul>",
+                hazardAlarm: "<strong>Signály Alarmu (Vzduchová houkačka):</strong><ul class='list-circle pl-5'><li><strong>První Pomoc:</strong> 3 krátké signály.</li><li><strong>Evakuace Staveniště:</strong> 1 dlouhý, nepřetržitý signál.</li></ul>",
+                hazardFirstAid: "<strong>Umístění První Pomoci:</strong> V přívěsu na staveništi WDC.",
+                hazardMusterPoint: "<strong>Shromaždiště pro Evakuaci:</strong> Před kanceláří staveniště. Zůstaňte tam, dokud nebudete zaevidováni. Neodcházejte.",
+                hazardWildlife: "<strong>Divoká Zvěř (Medvědi atd.):</strong><ul class='list-circle pl-5'><li>Nenechávejte na staveništi zbytky jídla. Pokud si přinesete jídlo, musíte si veškerý odpad odnést s sebou, včetně obalů a jednorázových kelímků na kávu.</li><li>Kontejnery na odpad na staveništi jsou určeny pouze pro stavební odpad.</li><li>Nepřibližujte se k divoké zvěři a nekrmte ji.</li></ul>",
+                hazardHeights: "<strong>Práce ve Výškách:</strong><ul class='list-circle pl-5'><li>Používejte zábradlí nebo bezpečnostní postroj při práci ve výšce nad 10 stop (3 metry).</li><li>Udržujte vzdálenost 6 stop (2 metry) od nechráněného okraje.</li><li><strong class='text-red-600'>VELMI DŮLEŽITÉ - ZÁBRADLÍ:</strong> Zábradlí je vaší primární ochranou proti pádu. Pokud je zábradlí odstraněno pro určitý úkol, je POUŽITÍ postroje POVINNÉ. Zábradlí MUSÍ být znovu nainstalováno, jakmile je práce dokončena nebo je oblast ponechána bez dozoru. Pokud uvidíte otvor bez zábradlí, OKAMŽITĚ to NAHLÁSIT svému nadřízenému. Vaše bezpečnost a bezpečnost vašich kolegů na tom závisí!</li></ul>",
+                hazardWhmis: "<strong>Nebezpečné Materiály (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC skladuje nebezpečné materiály v uzamčené místnosti a v červeném kontejneru. QR kód pro přístup k bezpečnostním listům (SDS) je k dispozici na těchto místech.</li><li>Jako subdodavatel vás váš přímý nadřízený bude informovat o umístění vašich specifických nebezpečných produktů.</li></ul>",
+                hazardExtinguishers: "<strong>Hasicí Přístroje:</strong> Dva hasicí přístroje se nacházejí na každém patře každé budovy a parkoviště. Na těchto místech jsou také vyvěšeny nouzové postupy.",
+                rulesHeader: "Obecná Pravidla Staveniště",
+                rulesList: [
+                    "VŽDY musíte nosit reflexní vestu, přilbu a boty s ocelovou špičkou.",
+                    "Při práci s hlučným zařízením používejte ochranu sluchu.",
+                    "Při práci, která může vytvářet prach, jiskry nebo postřiky, noste ochranné brýle.",
+                    "Sluchátka jsou povolena, ale používání <strong>funkce potlačení hluku je zakázáno</strong>. Musíte být schopni slyšet své okolí.",
+                    "Nesmíte obsluhovat žádné stroje, pokud k tomu nemáte oprávnění a školení.",
+                    "<strong class='text-blue-600'>Před zahájením práce MUSÍTE předložit Bezpečnostnímu Důstojníkovi Stavby (CSO) platný certifikát (průkaz) pro obsluhu jakéhokoli Mobilního Zařízení (např. vysokozdvižný vozík, zvedací plošina), Jeřábů nebo pro OCHRANU proti pádu. CSO si ponechá kopii. Bez toho vám nebude dovoleno tyto úkoly provádět.</strong>",
+                    "Alkohol a drogy jsou na staveništi přísně zakázány.",
+                    "Hlaste VŠECHNY incidenty, bez ohledu na to, jak jsou malé.",
+                    "Okamžitě nahlaste jakýkoli únik paliva nebo oleje.",
+                    "Parkujte pouze na vyhrazených místech.",
+                    "Neparkujte před kanceláří staveniště. Tato místa jsou pouze pro personál WDC.",
+                    "Přenosné toalety jsou vedle kanceláře staveniště. Splachovací toalety jsou přes ulici.",
+                    "Voda ve splachovacích toaletách NENÍ pitná. Pitná voda je k dispozici z kohoutku na Budově 1 (mezi Budovou 1 a 2).",
+                    "Do prostoru odstřelu smí vstupovat pouze oprávněný personál.",
+                    "Psi nejsou na staveništi povoleni.",
+                    "<strong>Každá parta si musí denně uklízet své pracoviště.</strong>",
+                    "Hrubé žerty a vtípky, které ohrožují ostatní, nejsou tolerovány.",
+                    "<strong>Obtěžování, šikana a násilí mají nulovou toleranci.</strong> Jakékoli incidenty okamžitě nahlaste svému nadřízenému a/nebo CSO.",
+                    "Kouření nebo vapování je povoleno pouze ve vyhrazených kuřáckých prostorách."
+                ],
+                startQuizButton: "Spustit Kvíz",
+                quiz: {
+                    questionBank: [
+                        { question: "Jaké tři základní osobní ochranné prostředky (OOPP) musíte na staveništi VŽDY nosit?", options: ["Přilbu, reflexní vestu a boty s ocelovou špičkou.", "Sluneční brýle, rukavice a mikinu.", "Špunty do uší, obličejovou masku a kraťasy."], correctAnswer: 0 },
+                        { question: "Jaký je signál alarmu pro evakuaci staveniště?", options: ["3 krátké signály.", "1 dlouhý, nepřetržitý signál.", "Hlasité zvonění zvonku."], correctAnswer: 1 },
+                        { question: "Kde je určené shromaždiště v případě evakuace?", options: ["Na parkovišti.", "Před kanceláří staveniště.", "Přes ulici u toalet."], correctAnswer: 1 },
+                        { question: "Co byste měli udělat, pokud jste svědkem jakéhokoli incidentu, zranění nebo téměř nehody?", options: ["Ignorovat to, pokud je to drobné.", "Říct to pouze kolegovi.", "OKAMŽITĚ to nahlásit svému nadřízenému."], correctAnswer: 2 },
+                        { question: "Pokud se domníváte, že je práce nebezpečná, jaké máte právo?", options: ["Musíte ji přesto udělat.", "Máte právo ji odmítnout a musíte to okamžitě oznámit svému nadřízenému.", "Můžete požádat kolegu, aby to udělal místo vás."], correctAnswer: 1 }
+                    ],
+                    nextButton: "Další",
+                    submitButton: "Odeslat Kvíz",
+                    resultsTitle: "Výsledky Kvízu",
+                    resultsText: (score, total) => `Získali jste ${score} z ${total} bodů.`,
+                    passedTitle: "Gratulujeme, prošli jste!",
+                    passedMessage: "Pro dokončení instruktáže prosím zaregistrujte své údaje.",
+                    failedTitle: "Je třeba přezkoumání",
+                    finishButton: "Přejít na Registrační Formulář",
+                    retakeButton: "Opakovat Kvíz"
+                },
+                messages: {
+                    reviewPrevious: "Nejprve si prosím projděte předchozí sekci.",
+                    selectAnswer: "Vyberte prosím odpověď.",
+                    reviewAll: "Před zahájením kvízu si prosím projděte všechny sekce.",
+                    orientationComplete: "Instruktáž dokončena. Vítejte na staveništi!"
+                }
+            },
+            hi: {
+                mainTitle: "WDC साइट ओरिएंटेशन",
+                welcomeMessage: "WDC निर्माण स्थल पर आपका स्वागत है। अपनी सुरक्षा और साइट नियमों के अनुपालन के लिए कृपया निम्नलिखित जानकारी को ध्यान से पढ़ें।",
+                rightsHeader: "आपके अधिकार और दायित्व",
+                rightsSubheader: "एक कार्यकर्ता के रूप में आपके अधिकार:",
+                rightToKnow: "<strong>जानने का अधिकार:</strong> आपको अपने कार्यस्थल में खतरों के बारे में जानने और अपनी सुरक्षा के लिए आवश्यक प्रशिक्षण प्राप्त करने का अधिकार है।",
+                rightToParticipate: "<strong>भाग लेने का अधिकार:</strong> आपको साइट पर सुरक्षा समस्याओं की पहचान करने और उन्हें हल करने में अपनी राय देने का अधिकार है।",
+                rightToRefuse: "<strong>असुरक्षित कार्य से इनकार करने का अधिकार:</strong> यदि आपको लगता है कि कोई काम आपके или दूसरों के लिए खतरनाक है, तो आपको उसे करने से इनकार करने का अधिकार है। आपको तुरंत अपने पर्यवेक्षक को सूचित करना होगा।",
+                obligationsSubheader: "एक कार्यकर्ता के रूप में आपके दायित्व:",
+                obligationWorkSafely: "<strong>सुरक्षित रूप से काम करें:</strong> आपको कंपनी के सभी सुरक्षा नियमों और प्रक्रियाओं का पालन करना होगा।",
+                obligationUsePpe: "<strong>अपने पीपीई का उपयोग करें:</strong> हेलमेट, स्टील टो शूज़, वेस्ट और दिए गए किसी भी अन्य सुरक्षात्मक उपकरण का सही ढंग से उपयोग करना आपका कर्तव्य है।",
+                obligationReportHazards: "<strong>खतरों की रिपोर्ट करें:</strong> यदि आप कुछ भी असुरक्षित देखते हैं, तो तुरंत अपने पर्यवेक्षक को बताएं।",
+                obligationNoDisable: "<strong>सुरक्षा उपकरणों को अक्षम न करें:</strong> किसी भी रेलिंग या सुरक्षा उपकरण को हटाना या अक्षम करना मना है। <strong class='text-orange-500'>इसमें खतरा/सावधानी टेप शामिल है। टेप के अंदर न जाएं या उसे न हटाएं क्योंकि यह एक नियंत्रण क्षेत्र को चिह्नित करता है जहां कोई काम न होने पर भी खतरा मौजूद हो सकता है।</strong>",
+                obligationCooperate: "<strong>सभी के साथ सहयोग करें:</strong> आपको सभी सुरक्षा मामलों पर अपने नियोक्ता और सहकर्मियों के साथ सहयोग करना होगा।",
+                obligationTraining: "<strong>प्रशिक्षण में भाग लें:</strong> आपको सभी सुरक्षा प्रशिक्षण में भाग लेना होगा।",
+                obligationHarassment: "<strong>उत्पीड़न और हिंसा नीति:</strong> WDC एक सुरक्षित, सम्मानजनक कार्यस्थल के लिए प्रतिबद्ध है। धमकाना, उत्पीड़न और हिंसा बर्दाश्त नहीं की जाती है। किसी भी घटना की सूचना तुरंत अपने पर्यवेक्षक को दें। सभी रिपोर्टों की तुरंत और गोपनीय रूप से जांच की जाएगी।",
+                emergencyContactsHeader: "आपातकालीन संपर्क",
+                contactCso: "<strong>सीएसओ और प्राथमिक उपचार:</strong> बेथज़ी हर्नांडेज़ - 604 906 0247",
+                contactFirstAidAlt1: "<strong>प्राथमिक उपचार বিকল্প:</strong> डैन मैकगायर - 604 938 4354",
+                contactFirstAidAlt2: "<strong>प्राथमिक उपचार বিকল্প:</strong> डैन इवांस - 604 999 2847",
+                contactRadio: "ड्यूटी पर मौजूद प्राथमिक उपचार परिचारक के पास हमेशा चैनल 10 पर एक रेडियो होता है।",
+                downloadContact: "डाउनलोड",
+                hazardsHeader: "साइट के खतरे",
+                hazardMobileEquipment: "<strong>मोबाइल उपकरण:</strong><ul class='list-circle pl-5'><li>ऑपरेटर के करीब जाने से पहले हमेशा उनसे आँख मिलाएं।</li><li>कभी भी मशीनरी के पीछे या लटके हुए भार के नीचे खड़े न हों।</li></ul>",
+                hazardBlasting: "<strong>ब्लास्टिंग:</strong><ul class='list-circle pl-5'><li>एयर हॉर्न सुनें। वे ब्लास्ट से पहले 12 बार और बाद में 1 बार बजेंगे।</li></ul>",
+                hazardAlarm: "<strong>अलार्म सिग्नल (एयर हॉर्न):</strong><ul class='list-circle pl-5'><li><strong>प्राथमिक उपचार:</strong> 3 छोटी बीप।</li><li><strong>साइट खाली करना:</strong> 1 लंबी, निरंतर बीप।</li></ul>",
+                hazardFirstAid: "<strong>प्राथमिक उपचार स्थान:</strong> WDC साइट ट्रेलर में।",
+                hazardMusterPoint: "<strong>निकासी सभा बिंदु:</strong> साइट कार्यालय के सामने। जब तक आपकी गिनती न हो जाए, वहीं रहें। छोड़े नहीं।",
+                hazardWildlife: "<strong>वन्यजीव (भालू, आदि):</strong><ul class='list-circle pl-5'><li>साइट पर भोजन का कचरा न छोड़ें। यदि आप भोजन लाते हैं, तो आपको रैपर और डिस्पोजेबल कॉफी कप सहित सभी कचरा अपने साथ ले जाना होगा।</li><li>साइट के कूड़ेदान केवल निर्माण कचरे के लिए हैं।</li><li>वन्यजीवों के पास न जाएं या उन्हें खाना न खिलाएं।</li></ul>",
+                hazardHeights: "<strong>ऊंचाई पर काम करना:</strong><ul class='list-circle pl-5'><li>10 फीट (3 मीटर) से अधिक ऊंचाई पर काम करते समय रेलिंग या सुरक्षा हार्नेस का उपयोग करें।</li><li>किसी भी असुरक्षित किनारे से 6 फीट (2 मीटर) पीछे रहें।</li><li><strong class='text-red-600'>बहुत महत्वपूर्ण - रेलिंग:</strong> रेलिंग आपकी प्राथमिक गिरावट सुरक्षा है। यदि किसी कार्य के लिए रेलिंग हटा दी जाती है, तो हार्नेस पहनना अनिवार्य है। काम पूरा होते ही या क्षेत्र को खाली छोड़ने पर रेलिंग को फिर से स्थापित किया जाना चाहिए। यदि आप बिना रेलिंग के कोई खुला स्थान देखते हैं, तो तुरंत अपने पर्यवेक्षक को इसकी सूचना दें। आपकी और आपके सहकर्मियों की सुरक्षा इसी पर निर्भर करती है!</li></ul>",
+                hazardWhmis: "<strong>खतरनाक सामग्री (WHMIS):</strong><ul class='list-circle pl-5'><li>WDC खतरनाक सामग्री को लॉक रूम और रेड सी कैन में संग्रहीत करता है। सुरक्षा डेटा शीट (एसडीएस) तक पहुंचने के लिए एक क्यूआर कोड इन स्थानों पर उपलब्ध है।</li><li>एक उपठेकेदार के रूप में, आपका प्रत्यक्ष पर्यवेक्षक आपको आपके विशिष्ट खतरनाक उत्पादों के स्थान के बारे में सूचित करेगा।</li></ul>",
+                hazardExtinguishers: "<strong>अग्निशामक:</strong> प्रत्येक भवन और पार्किंग गैरेज के प्रत्येक स्तर पर दो अग्निशामक स्थित हैं। आपातकालीन प्रक्रियाएं भी इन स्थानों पर पोस्ट की जाती हैं।",
+                rulesHeader: "सामान्य साइट नियम",
+                rulesList: [
+                    "आपको हमेशा एक हाई-विजिबिलिटी वेस्ट, हार्ड हैट और स्टील-टो शूज़ पहनना चाहिए।",
+                    "शोर वाले उपकरणों का उपयोग करते समय श्रवण सुरक्षा पहनें।",
+                    "जब आपके काम से धूल, चिंगारी या छींटे पड़ सकते हैं तो सुरक्षा चश्मा पहनें।",
+                    "हेडफ़ोन की अनुमति है, लेकिन <strong>शोर-रद्द करने वाली सुविधा का उपयोग करना मना है</strong>। आपको अपने आस-पास की आवाज़ सुनने में सक्षम होना चाहिए।",
+                    "जब तक आप अधिकृत और प्रशिक्षित न हों, आप कोई भी मशीनरी नहीं चला सकते।",
+                    "<strong class='text-blue-600'>काम शुरू करने से पहले, आपको किसी भी मोबाइल उपकरण (जैसे, फोर्कलिफ्ट, बूम लिफ्ट), क्रेन, या पतन संरक्षण के लिए वैध प्रमाणीकरण (टिकट) का प्रमाण साइट के निर्माण सुरक्षा अधिकारी (CSO) को प्रस्तुत करना होगा। CSO एक प्रति रखेगा। इसके बिना आपको ये कार्य करने की अनुमति नहीं दी जाएगी।</strong>",
+                    "साइट पर शराब और ड्रग्स सख्त वर्जित हैं।",
+                    "सभी घटनाओं की रिपोर्ट करें, चाहे वे कितनी भी छोटी क्यों न हों।",
+                    "किसी भी ईंधन या तेल के रिसाव की तुरंत रिपोर्ट करें।",
+                    "केवल निर्दिष्ट क्षेत्रों में ही पार्क करें।",
+                    "साइट कार्यालय के सामने पार्क न करें। वे स्थान केवल WDC कर्मचारियों के लिए हैं।",
+                    "पोर्टेबल शौचालय साइट कार्यालय के बगल में हैं। फ्लश वाले शौचालय सड़क के पार हैं।",
+                    "फ्लश वाले शौचालयों में पानी पीने के लिए नहीं है। पीने योग्य पानी बिल्डिंग 1 (बिल्डिंग 1 और 2 के बीच स्थित) पर एक नल से उपलब्ध है।",
+                    "केवल अधिकृत कर्मियों को ही ब्लास्टिंग क्षेत्र में जाने की अनुमति है।",
+                    "साइट पर कुत्तों की अनुमति नहीं है।",
+                    "<strong>प्रत्येक दल को प्रतिदिन अपने कार्य क्षेत्र को साफ करना होगा।</strong>",
+                    "दूसरों को खतरे में डालने वाले हंसी-मजाक और शरारतों को बर्दाश्त नहीं किया जाएगा।",
+                    "<strong>उत्पीड़न, धमकाने और हिंसा के प्रति शून्य सहनशीलता (जीरो टॉलरेंस) है।</strong> किसी भी घटना की सूचना तुरंत अपने पर्यवेक्षक और/या CSO को दें।",
+                    "धूम्रपान या वापिंग केवल निर्दिष्ट धूम्रपान क्षेत्रों में ही अनुमत है।"
+                ],
+                startQuizButton: "क्विज़ शुरू करें",
+                quiz: {
+                    questionBank: [
+                        { question: "साइट पर आपको हमेशा कौन से तीन आवश्यक पीपीई पहनने चाहिए?", options: ["हार्ड हैट, हाई-विजिबिलिटी वेस्ट और स्टील-टो शूज़।", "धूप का चश्मा, दस्ताने और एक स्वेटशर्ट।", "ईयरप्लग, एक फेस मास्क और शॉर्ट्स।"], correctAnswer: 0 },
+                        { question: "साइट खाली करने के लिए अलार्म सिग्नल क्या है?", options: ["3 छोटी बीप।", "1 लंबी, निरंतर बीप।", "एक जोर की घंटी बज रही है।"], correctAnswer: 1 },
+                        { question: "निकासी की स्थिति में निर्दिष्ट सभा बिंदु कहाँ है?", options: ["पार्किंग में।", "साइट कार्यालय के सामने।", "शौचालय के पास सड़क के पार।"], correctAnswer: 1 },
+                        { question: "यदि आप किसी घटना, चोट या लगभग चूक के गवाह हैं तो आपको क्या करना चाहिए?", options: ["यदि यह मामूली है तो इसे अनदेखा करें।", "केवल एक सहकर्मी को बताएं।", "तुरंत अपने पर्यवेक्षक को इसकी सूचना दें।"], correctAnswer: 2 },
+                        { question: "यदि आपको लगता है कि कोई काम असुरक्षित है, तो आपका क्या अधिकार है?", options: ["आपको इसे वैसे भी करना होगा।", "आपको इसे मना करने का अधिकार है और आपको तुरंत अपने पर्यवेक्षक को बताना होगा।", "आप किसी सहकर्मी से इसे करने के लिए कह सकते हैं।"], correctAnswer: 1 }
+                    ],
+                    nextButton: "अगला",
+                    submitButton: "क्विज़ जमा करें",
+                    resultsTitle: "क्विज़ के परिणाम",
+                    resultsText: (score, total) => `आपने ${total} में से ${score} अंक प्राप्त किए।`,
+                    passedTitle: "बधाई हो, आप पास हो गए!",
+                    passedMessage: "अपना ओरिएंटेशन पूरा करने के लिए, कृपया अपना विवरण दर्ज करें।",
+                    failedTitle: "समीक्षा की आवश्यकता है",
+                    finishButton: "पंजीकरण फॉर्म पर जाएं",
+                    retakeButton: "क्विज़ फिर से दें"
+                },
+                messages: {
+                    reviewPrevious: "कृपया पहले पिछला अनुभाग देखें।",
+                    selectAnswer: "कृपया एक उत्तर चुनें।",
+                    reviewAll: "क्विज़ शुरू करने से पहले कृपया सभी अनुभागों की समीक्षा करें।",
+                    orientationComplete: "ओरिएंटेशन पूरा हुआ। साइट पर आपका स्वागत है!"
+                }
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.en;
+            document.getElementById('main-title').textContent = t.mainTitle;
+            document.getElementById('welcome-message').textContent = t.welcomeMessage;
+            document.getElementById('rights-header').textContent = t.rightsHeader;
+            document.getElementById('rights-subheader').textContent = t.rightsSubheader;
+            document.getElementById('right-to-know').innerHTML = t.rightToKnow;
+            document.getElementById('right-to-participate').innerHTML = t.rightToParticipate;
+            document.getElementById('right-to-refuse').innerHTML = t.rightToRefuse;
+            document.getElementById('obligations-subheader').textContent = t.obligationsSubheader;
+            document.getElementById('obligation-work-safely').innerHTML = t.obligationWorkSafely;
+            document.getElementById('obligation-use-ppe').innerHTML = t.obligationUsePpe;
+            document.getElementById('obligation-report-hazards').innerHTML = t.obligationReportHazards;
+            document.getElementById('obligation-no-disable').innerHTML = t.obligationNoDisable;
+            document.getElementById('obligation-cooperate').innerHTML = t.obligationCooperate;
+            document.getElementById('obligation-training').innerHTML = t.obligationTraining;
+            document.getElementById('obligation-harassment').innerHTML = t.obligationHarassment;
+            document.getElementById('emergency-contacts-header').textContent = t.emergencyContactsHeader;
+            
+            const csoEl = document.getElementById('contact-cso');
+            csoEl.innerHTML = `<span>${t.contactCso}</span> <a href="#" onclick="downloadVCard('Bethzy Hernandez', 'CSO and First Aid', '6049060247'); return false;" class="download-btn">${t.downloadContact}</a>`;
+            const alt1El = document.getElementById('contact-first-aid-alt1');
+            alt1El.innerHTML = `<span>${t.contactFirstAidAlt1}</span> <a href="#" onclick="downloadVCard('Dan McGuire', 'Carpenter and First Aid', '6049384354'); return false;" class="download-btn">${t.downloadContact}</a>`;
+            const alt2El = document.getElementById('contact-first-aid-alt2');
+            alt2El.innerHTML = `<span>${t.contactFirstAidAlt2}</span> <a href="#" onclick="downloadVCard('Dan Evans', 'Site supervisor and First Aid', '6049992847'); return false;" class="download-btn">${t.downloadContact}</a>`;
+            document.getElementById('contact-radio').innerHTML = t.contactRadio;
+
+            document.getElementById('hazards-header').textContent = t.hazardsHeader;
+            document.getElementById('hazard-mobile-equipment').innerHTML = t.hazardMobileEquipment;
+            document.getElementById('hazard-blasting').innerHTML = t.hazardBlasting;
+            document.getElementById('hazard-alarm').innerHTML = t.hazardAlarm;
+            document.getElementById('hazard-first-aid').innerHTML = t.hazardFirstAid;
+            document.getElementById('hazard-muster-point').innerHTML = t.hazardMusterPoint;
+            document.getElementById('hazard-wildlife').innerHTML = t.hazardWildlife;
+            document.getElementById('hazard-heights').innerHTML = t.hazardHeights;
+            document.getElementById('hazard-whmis').innerHTML = t.hazardWhmis;
+            document.getElementById('hazard-extinguishers').innerHTML = t.hazardExtinguishers;
+            document.getElementById('rules-header').textContent = t.rulesHeader;
+            const rulesListEl = document.getElementById('rules-list');
+            rulesListEl.innerHTML = '';
+            (t.rulesList || translations.en.rulesList).forEach(rule => {
+                const li = document.createElement('li');
+                li.innerHTML = rule;
+                rulesListEl.appendChild(li);
+            });
+            document.getElementById('startQuizButton').textContent = t.startQuizButton;
+        }
+
+        const sectionOrder = ['rights-content', 'emergency-contacts-content', 'hazards-content', 'rules-content'];
+
+        function showMessage(msgKey, type) {
+            const t = translations[currentLang] || translations.en;
+            const msg = t.messages[msgKey];
+            const messageBox = document.getElementById('message');
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box';
+            messageBox.classList.remove('hidden');
+            setTimeout(() => messageBox.classList.add('hidden'), 3000);
+        }
+
+        window.downloadVCard = function(fullName, title, phone) {
+            const nameParts = fullName.split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ');
+
+            const vCard = `BEGIN:VCARD
+VERSION:3.0
+N:${lastName};${firstName};;;
+FN:${fullName}
+TITLE:${title}
+ORG:WDC
+TEL;TYPE=CELL:${phone}
+END:VCARD`;
+            const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${fullName.replace(' ', '_')}.vcf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const quizModal = document.getElementById('quiz-modal');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const startQuizButton = document.getElementById('startQuizButton');
+            const languageSelector = document.getElementById('language-selector');
+
+            changeLanguage('en');
+
+            languageSelector.addEventListener('change', (event) => {
+                changeLanguage(event.target.value);
+            });
+
+            window.toggleSection = function(id) {
+                const content = document.getElementById(id);
+                const header = content.previousElementSibling;
+                const arrow = header.querySelector('.arrow');
+                const currentIndex = sectionOrder.indexOf(id);
+
+                if (currentIndex > 0) {
+                    const prevId = sectionOrder[currentIndex - 1];
+                    if (document.getElementById(prevId).dataset.viewed !== 'true') {
+                        showMessage('reviewPrevious', 'error');
+                        return;
+                    }
+                }
+                
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                    arrow.classList.remove('rotate');
+                } else {
+                    document.querySelectorAll('.section-content.active').forEach(openContent => {
+                        openContent.classList.remove('active');
+                        openContent.previousElementSibling.querySelector('.arrow').classList.remove('rotate');
+                    });
+                    content.classList.add('active');
+                    arrow.classList.add('rotate');
+                    content.dataset.viewed = 'true';
+                    
+                    if (id === 'rules-content') {
+                        document.getElementById('footer').classList.remove('hidden');
+                    }
+                }
+            };
+
+            let currentQuizQuestions = [];
+            let currentQuestionIndex = 0;
+            let score = 0;
+            const passingScore = 4;
+            
+            function startQuiz() {
+                const t = translations[currentLang] || translations.en;
+                currentQuestionIndex = 0;
+                score = 0;
+                currentQuizQuestions = t.quiz.questionBank.sort(() => 0.5 - Math.random()).slice(0, 5);
+                const quizContent = document.getElementById('quiz-content');
+                const quizResults = document.getElementById('quiz-results');
+                quizContent.classList.remove('hidden');
+                quizResults.classList.add('hidden');
+                quizModal.classList.remove('hidden');
+                displayQuestion();
+            }
+
+            function displayQuestion() {
+                const t = translations[currentLang] || translations.en;
+                const question = currentQuizQuestions[currentQuestionIndex];
+                const questionText = document.getElementById('question-text');
+                const optionsContainer = document.getElementById('options-container');
+                questionText.textContent = question.question;
+                optionsContainer.innerHTML = '';
+                question.options.forEach((option, index) => {
+                    const optionId = `option${index}`;
+                    optionsContainer.innerHTML += `
+                        <label for="${optionId}" class="quiz-option">
+                            <input type="radio" name="quiz-option" id="${optionId}" value="${index}">
+                            ${option}
+                        </label>
+                    `;
+                });
+                nextQuestionBtn.textContent = (currentQuestionIndex === currentQuizQuestions.length - 1) ? t.quiz.submitButton : t.quiz.nextButton;
+            }
+
+            function handleNextQuestion() {
+                const selectedOption = document.querySelector('input[name="quiz-option"]:checked');
+                if (!selectedOption) {
+                    showMessage('selectAnswer', 'error');
+                    return;
+                }
+                if (parseInt(selectedOption.value) === currentQuizQuestions[currentQuestionIndex].correctAnswer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentQuizQuestions.length) {
+                    displayQuestion();
+                } else {
+                    showQuizResults();
+                }
+            }
+
+            function showQuizResults() {
+                const t = translations[currentLang] || translations.en;
+                const quizContent = document.getElementById('quiz-content');
+                const quizResults = document.getElementById('quiz-results');
+                const resultsTitle = document.getElementById('results-title');
+                const resultsText = document.getElementById('results-text');
+                const quizActionBtn = document.getElementById('quiz-action-btn');
+
+                quizContent.classList.add('hidden');
+                quizResults.classList.remove('hidden');
+                
+                const passed = score >= passingScore;
+                
+                if (passed) {
+                    resultsTitle.textContent = t.quiz.passedTitle;
+                    resultsText.textContent = t.quiz.passedMessage;
+                    quizActionBtn.textContent = t.quiz.finishButton;
+                    quizActionBtn.href = "https://forms.gle/i9MmVPU1uPnTtpmY6"; 
+                    quizActionBtn.onclick = null;
+                    quizActionBtn.classList.remove('bg-red-500', 'hover:bg-red-700');
+                    quizActionBtn.classList.add('bg-green-500', 'hover:bg-green-700');
+                } else {
+                    resultsTitle.textContent = t.quiz.failedTitle;
+                    resultsText.textContent = t.quiz.resultsText(score, currentQuizQuestions.length);
+                    quizActionBtn.textContent = t.quiz.retakeButton;
+                    quizActionBtn.href = "#";
+                    quizActionBtn.onclick = (e) => {
+                        e.preventDefault();
+                        startQuiz();
+                    };
+                    quizActionBtn.classList.remove('bg-green-500', 'hover:bg-green-700');
+                    quizActionBtn.classList.add('bg-red-500', 'hover:bg-red-700');
+                }
+            }
+
+            nextQuestionBtn.addEventListener('click', handleNextQuestion);
+            
+            startQuizButton.addEventListener('click', () => {
+                 if (!sectionOrder.every(id => document.getElementById(id).dataset.viewed === 'true')) {
+                    showMessage('reviewAll', 'error');
+                    return;
+                }
+                startQuiz();
+            });
+        });
+    </script>
+</body>
+</html>

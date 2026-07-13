@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WDC Young & New Worker Orientation</title>
+    <title>WDC Young Worker Orientation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,6 +13,7 @@
         }
         .section-header {
             cursor: pointer;
+            border-bottom: 3px solid #96C61C;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -41,6 +42,7 @@
         }
         .arrow {
             transition: transform 0.3s ease;
+            color: #96C61C;
         }
         .arrow.rotate {
             transform: rotate(90deg);
@@ -51,6 +53,8 @@
             color: #1f2937;
             margin-top: 1.25rem;
             margin-bottom: 0.5rem;
+            border-left: 4px solid #96C61C;
+            padding-left: 0.6rem;
         }
         .sub-title:first-child {
             margin-top: 0;
@@ -168,7 +172,7 @@
         </section>
 
         <footer class="text-center mt-10">
-            <a href="#" id="register-btn" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg"></a>
+            <a href="#" id="register-btn" target="_blank" rel="noopener noreferrer" class="inline-block text-white font-bold py-3 px-6 rounded-lg text-lg" style="background-color:#96C61C" onmouseover="this.style.backgroundColor='#7da414'" onmouseout="this.style.backgroundColor='#96C61C'"></a>
             <p id="register-note" class="text-gray-500 text-sm mt-3"></p>
         </footer>
     </div>
@@ -180,7 +184,7 @@
 
         const translations = {
             en: {
-                mainTitle: "Young & New Worker Orientation",
+                mainTitle: "Young Worker Orientation",
                 welcomeMessage: "This supplement is required if you are 25 years old or younger, OR new to construction / new to this site. Review every section, then register at the end.",
                 group1Header: "Rights, Duties & Supervision",
                 group2Header: "Working Alone & Personal Safety",
@@ -219,7 +223,7 @@
                 }
             },
             es: {
-                mainTitle: "Orientación para Trabajadores Jóvenes y Nuevos",
+                mainTitle: "Orientación para Trabajadores Jóvenes",
                 welcomeMessage: "Este suplemento es obligatorio si usted tiene 25 años o menos, O es nuevo en la construcción / nuevo en este sitio. Revise cada sección y regístrese al final.",
                 group1Header: "Derechos, Deberes y Supervisión",
                 group2Header: "Trabajar Solo y Seguridad Personal",

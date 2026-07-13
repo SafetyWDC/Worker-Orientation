@@ -331,6 +331,7 @@
                     ageYes: "Yes",
                     ageNo: "No",
                     goToYoungBtn: "Go to Young Worker Orientation",
+                    passedYoungMessage: "Before registering, you must also complete the Young Worker Orientation.",
                     finishButton: "Go to Registration Form",
                     retakeButton: "Retake Quiz"
                 },
@@ -416,6 +417,7 @@
                     ageYes: "Sí",
                     ageNo: "No",
                     goToYoungBtn: "Ir a la Orientación de Trabajadores Jóvenes",
+                    passedYoungMessage: "Antes de registrarse, también debe completar la Orientación para Trabajadores Jóvenes.",
                     finishButton: "Ir al Formulario de Registro",
                     retakeButton: "Reintentar Cuestionario"
                 },
@@ -501,6 +503,7 @@
                     ageYes: "Oui",
                     ageNo: "Non",
                     goToYoungBtn: "Aller à l'orientation des jeunes travailleurs",
+                    passedYoungMessage: "Avant de vous inscrire, vous devez également compléter l'orientation des jeunes travailleurs.",
                     finishButton: "Aller au Formulaire d'Enregistrement",
                     retakeButton: "Recommencer le Quiz"
                 },
@@ -586,6 +589,7 @@
                     ageYes: "Да",
                     ageNo: "Нет",
                     goToYoungBtn: "Перейти к ориентации для молодых работников",
+                    passedYoungMessage: "Перед регистрацией вы также должны пройти ориентацию для молодых работников.",
                     finishButton: "Перейти к Форме Регистрации",
                     retakeButton: "Пройти Тест Снова"
                 },
@@ -671,6 +675,7 @@
                     ageYes: "Ja",
                     ageNo: "Nein",
                     goToYoungBtn: "Zur Orientierung für junge Arbeitnehmer",
+                    passedYoungMessage: "Vor der Registrierung müssen Sie auch die Orientierung für junge Arbeitnehmer absolvieren.",
                     finishButton: "Zum Registrierungsformular",
                     retakeButton: "Quiz wiederholen"
                 },
@@ -756,6 +761,7 @@
                     ageYes: "Ano",
                     ageNo: "Ne",
                     goToYoungBtn: "Přejít na orientaci pro mladé pracovníky",
+                    passedYoungMessage: "Před registrací musíte také absolvovat orientaci pro mladé pracovníky.",
                     finishButton: "Přejít na Registrační Formulář",
                     retakeButton: "Opakovat Kvíz"
                 },
@@ -841,6 +847,7 @@
                     ageYes: "हाँ",
                     ageNo: "नहीं",
                     goToYoungBtn: "Young Worker Orientation पर जाएँ",
+                    passedYoungMessage: "पंजीकरण से पहले, आपको Young Worker Orientation भी पूरी करनी होगी।",
                     finishButton: "पंजीकरण फॉर्म पर जाएं",
                     retakeButton: "क्विज़ फिर से दें"
                 },
@@ -1118,6 +1125,7 @@ END:VCARD`;
                 const t = translations[currentLang] || translations.en;
                 const quizActionBtn = document.getElementById('quiz-action-btn');
                 document.getElementById('age-question').classList.add('hidden');
+                document.getElementById('results-text').textContent = t.quiz.passedYoungMessage || translations.en.quiz.passedYoungMessage;
                 quizActionBtn.textContent = t.quiz.goToYoungBtn || translations.en.quiz.goToYoungBtn;
                 quizActionBtn.href = "young-worker.html";
                 quizActionBtn.onclick = null;

@@ -142,7 +142,6 @@
             </div>
             <h1 id="main-title" class="text-4xl font-bold text-gray-800 mb-2"></h1>
              <p id="welcome-message" class="text-lg text-gray-600 mt-4"></p>
-             <div id="young-worker-banner" class="mt-6 p-4 bg-yellow-50 border-2 border-yellow-400 rounded-lg text-left text-gray-800"></div>
         </header>
         
         <section class="mb-8">
@@ -229,6 +228,13 @@
             <div id="quiz-results" class="hidden text-center">
                 <h2 id="results-title" class="text-3xl font-bold mb-4"></h2>
                 <p id="results-text" class="text-xl mb-6"></p>
+                <div id="age-question" class="hidden mb-6">
+                    <p id="age-question-text" class="text-lg font-semibold mb-4"></p>
+                    <div class="flex gap-4 justify-center">
+                        <button id="age-yes-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-8 rounded"></button>
+                        <button id="age-no-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-8 rounded"></button>
+                    </div>
+                </div>
                 <a href="#" id="quiz-action-btn" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"></a>
             </div>
         </div>
@@ -241,7 +247,6 @@
             en: {
                 mainTitle: "WDC Site Orientation",
                 welcomeMessage: "Welcome to the WDC construction site. Please review the following information carefully for your safety and compliance with site rules.",
-                youngWorkerBanner: "⚠️ <strong>Are you under 25 years old, or new to construction?</strong> WorkSafeBC requires you to also complete the <a href='young-worker.html' class='text-blue-600 underline font-bold'>Young & New Worker Orientation</a> after finishing this one.",
                 rightsHeader: "Your Rights and Obligations",
                 rightsSubheader: "Your Rights as a Worker:",
                 rightToKnow: "<strong>Right to Know:</strong> You have the right to know about hazards in your workplace and receive the training needed to protect yourself.",
@@ -309,6 +314,11 @@
                     passedTitle: "Congratulations, You Passed!",
                     passedMessage: "To finalize your orientation, please register your details.",
                     failedTitle: "Review Needed",
+                    feedbackWrong: "Incorrect — the correct answer is highlighted in green.",
+                    ageQuestion: "Are you 25 years old or younger, or new to construction?",
+                    ageYes: "Yes",
+                    ageNo: "No",
+                    goToYoungBtn: "Go to Young & New Worker Orientation",
                     finishButton: "Go to Registration Form",
                     retakeButton: "Retake Quiz"
                 },
@@ -322,7 +332,6 @@
             es: {
                 mainTitle: "Orientación del Sitio WDC",
                 welcomeMessage: "Bienvenido al sitio de construcción de WDC. Por favor, revise la siguiente información cuidadosamente por su seguridad y para cumplir con las reglas del sitio.",
-                youngWorkerBanner: "⚠️ <strong>¿Es menor de 25 años o nuevo en la construcción?</strong> WorkSafeBC requiere que también complete la <a href='young-worker.html' class='text-blue-600 underline font-bold'>Orientación para Trabajadores Jóvenes y Nuevos</a> después de terminar esta.",
                 rightsHeader: "Sus Derechos y Obligaciones",
                 rightsSubheader: "Sus Derechos como Trabajador:",
                 rightToKnow: "<strong>Derecho a Saber:</strong> Tiene derecho a saber sobre los peligros en su lugar de trabajo y recibir la capacitación necesaria para protegerse.",
@@ -390,6 +399,11 @@
                     passedTitle: "¡Felicidades, ha aprobado!",
                     passedMessage: "Para finalizar su orientación, por favor registre sus datos.",
                     failedTitle: "Necesita Revisión",
+                    feedbackWrong: "Incorrecto — la respuesta correcta está resaltada en verde.",
+                    ageQuestion: "¿Tiene 25 años o menos, o es nuevo en la construcción?",
+                    ageYes: "Sí",
+                    ageNo: "No",
+                    goToYoungBtn: "Ir a la Orientación de Trabajadores Jóvenes y Nuevos",
                     finishButton: "Ir al Formulario de Registro",
                     retakeButton: "Reintentar Cuestionario"
                 },
@@ -403,7 +417,6 @@
             fr: {
                 mainTitle: "Orientation de Chantier WDC",
                 welcomeMessage: "Bienvenue sur le chantier de construction de WDC. Veuillez lire attentivement les informations suivantes pour votre sécurité et le respect des règles du chantier.",
-                youngWorkerBanner: "⚠️ <strong>Avez-vous moins de 25 ans ou êtes-vous nouveau dans la construction ?</strong> WorkSafeBC exige que vous complétiez aussi l'<a href='young-worker.html' class='text-blue-600 underline font-bold'>Orientation des jeunes et nouveaux travailleurs</a> après celle-ci.",
                 rightsHeader: "Vos Droits et Obligations",
                 rightsSubheader: "Vos Droits en tant que Travailleur :",
                 rightToKnow: "<strong>Droit de Savoir :</strong> Vous avez le droit de connaître les dangers sur votre lieu de travail et de recevoir la formation nécessaire pour vous proteger.",
@@ -471,6 +484,11 @@
                     passedTitle: "Félicitations, vous avez réussi !",
                     passedMessage: "Pour finaliser votre orientation, veuillez enregistrer vos coordonnées.",
                     failedTitle: "Révision Nécessaire",
+                    feedbackWrong: "Incorrect — la bonne réponse est surlignée en vert.",
+                    ageQuestion: "Avez-vous 25 ans ou moins, ou êtes-vous nouveau dans la construction ?",
+                    ageYes: "Oui",
+                    ageNo: "Non",
+                    goToYoungBtn: "Aller à l'orientation des jeunes et nouveaux travailleurs",
                     finishButton: "Aller au Formulaire d'Enregistrement",
                     retakeButton: "Recommencer le Quiz"
                 },
@@ -484,7 +502,6 @@
             ru: {
                 mainTitle: "Инструктаж на Объекте WDC",
                 welcomeMessage: "Добро пожаловать на строительный объект WDC. Пожалуйста, внимательно ознакомьтесь с информацией для вашей безопасности и соблюдения правил.",
-                youngWorkerBanner: "⚠️ <strong>Вам меньше 25 лет или вы новичок в строительстве?</strong> WorkSafeBC требует, чтобы после этого вы также прошли <a href='young-worker.html' class='text-blue-600 underline font-bold'>ориентацию для молодых и новых работников</a>.",
                 rightsHeader: "Ваши Права и Обязанности",
                 rightsSubheader: "Ваши Права как Работника:",
                 rightToKnow: "<strong>Право Знать:</strong> Вы имеете право знать об опасностях на рабочем месте и получать необходимое обучение для защиты.",
@@ -552,6 +569,11 @@
                     passedTitle: "Поздравляем, вы прошли!",
                     passedMessage: "Для завершения инструктажа, пожалуйста, зарегистрируйте ваши данные.",
                     failedTitle: "Требуется Повторение",
+                    feedbackWrong: "Неверно — правильный ответ выделен зелёным.",
+                    ageQuestion: "Вам 25 лет или меньше, или вы новичок в строительстве?",
+                    ageYes: "Да",
+                    ageNo: "Нет",
+                    goToYoungBtn: "Перейти к ориентации для молодых и новых работников",
                     finishButton: "Перейти к Форме Регистрации",
                     retakeButton: "Пройти Тест Снова"
                 },
@@ -565,7 +587,6 @@
             de: {
                 mainTitle: "WDC Baustelleneinweisung",
                 welcomeMessage: "Willkommen auf der WDC-Baustelle. Bitte lesen Sie die folgenden Informationen sorgfältig für Ihre Sicherheit und zur Einhaltung der Baustellenregeln.",
-                youngWorkerBanner: "⚠️ <strong>Sind Sie unter 25 Jahre alt oder neu im Baugewerbe?</strong> WorkSafeBC verlangt, dass Sie danach auch die <a href='young-worker.html' class='text-blue-600 underline font-bold'>Orientierung für junge und neue Arbeitnehmer</a> absolvieren.",
                 rightsHeader: "Ihre Rechte und Pflichten",
                 rightsSubheader: "Ihre Rechte als Arbeitnehmer:",
                 rightToKnow: "<strong>Recht auf Information:</strong> Sie haben das Recht, über Gefahren an Ihrem Arbeitsplatz informiert zu werden und die notwendige Schulung zu erhalten, um sich zu schützen.",
@@ -633,6 +654,11 @@
                     passedTitle: "Herzlichen Glückwunsch, Sie haben bestanden!",
                     passedMessage: "Um Ihre Einweisung abzuschließen, registrieren Sie bitte Ihre Daten.",
                     failedTitle: "Überprüfung erforderlich",
+                    feedbackWrong: "Falsch — die richtige Antwort ist grün markiert.",
+                    ageQuestion: "Sind Sie 25 Jahre oder jünger, oder neu im Baugewerbe?",
+                    ageYes: "Ja",
+                    ageNo: "Nein",
+                    goToYoungBtn: "Zur Orientierung für junge und neue Arbeitnehmer",
                     finishButton: "Zum Registrierungsformular",
                     retakeButton: "Quiz wiederholen"
                 },
@@ -646,7 +672,6 @@
             cs: {
                 mainTitle: "Instruktáž na Staveništi WDC",
                 welcomeMessage: "Vítejte na staveništi WDC. Přečtěte si prosím pečlivě následující informace pro vaši bezpečnost a dodržování pravidel.",
-                youngWorkerBanner: "⚠️ <strong>Je vám méně než 25 let, nebo jste ve stavebnictví nový?</strong> WorkSafeBC vyžaduje, abyste po dokončení této orientace absolvovali také <a href='young-worker.html' class='text-blue-600 underline font-bold'>orientaci pro mladé a nové pracovníky</a>.",
                 rightsHeader: "Vaše Práva a Povinnosti",
                 rightsSubheader: "Vaše Práva jako Pracovníka:",
                 rightToKnow: "<strong>Právo Vědět:</strong> Máte právo vědět o nebezpečích na pracovišti a obdržet školení potřebné k vaší ochraně.",
@@ -714,6 +739,11 @@
                     passedTitle: "Gratulujeme, prošli jste!",
                     passedMessage: "Pro dokončení instruktáže prosím zaregistrujte své údaje.",
                     failedTitle: "Je třeba přezkoumání",
+                    feedbackWrong: "Špatně — správná odpověď je zvýrazněna zeleně.",
+                    ageQuestion: "Je vám 25 let nebo méně, nebo jste ve stavebnictví nový?",
+                    ageYes: "Ano",
+                    ageNo: "Ne",
+                    goToYoungBtn: "Přejít na orientaci pro mladé a nové pracovníky",
                     finishButton: "Přejít na Registrační Formulář",
                     retakeButton: "Opakovat Kvíz"
                 },
@@ -727,7 +757,6 @@
             hi: {
                 mainTitle: "WDC साइट ओरिएंटेशन",
                 welcomeMessage: "WDC निर्माण स्थल पर आपका स्वागत है। अपनी सुरक्षा और साइट नियमों के अनुपालन के लिए कृपया निम्नलिखित जानकारी को ध्यान से पढ़ें।",
-                youngWorkerBanner: "⚠️ <strong>क्या आपकी उम्र 25 वर्ष से कम है, या आप निर्माण कार्य में नए हैं?</strong> WorkSafeBC के अनुसार इसे पूरा करने के बाद आपको <a href='young-worker.html' class='text-blue-600 underline font-bold'>Young & New Worker Orientation</a> भी पूरी करनी होगी।",
                 rightsHeader: "आपके अधिकार और दायित्व",
                 rightsSubheader: "एक कार्यकर्ता के रूप में आपके अधिकार:",
                 rightToKnow: "<strong>जानने का अधिकार:</strong> आपको अपने कार्यस्थल में खतरों के बारे में जानने और अपनी सुरक्षा के लिए आवश्यक प्रशिक्षण प्राप्त करने का अधिकार है।",
@@ -795,6 +824,11 @@
                     passedTitle: "बधाई हो, आप पास हो गए!",
                     passedMessage: "अपना ओरिएंटेशन पूरा करने के लिए, कृपया अपना विवरण दर्ज करें।",
                     failedTitle: "समीक्षा की आवश्यकता है",
+                    feedbackWrong: "गलत — सही उत्तर हरे रंग में दिखाया गया है।",
+                    ageQuestion: "क्या आपकी उम्र 25 वर्ष या उससे कम है, या आप निर्माण कार्य में नए हैं?",
+                    ageYes: "हाँ",
+                    ageNo: "नहीं",
+                    goToYoungBtn: "Young & New Worker Orientation पर जाएँ",
                     finishButton: "पंजीकरण फॉर्म पर जाएं",
                     retakeButton: "क्विज़ फिर से दें"
                 },
@@ -812,7 +846,6 @@
             const t = translations[lang] || translations.en;
             document.getElementById('main-title').textContent = t.mainTitle;
             document.getElementById('welcome-message').textContent = t.welcomeMessage;
-            document.getElementById('young-worker-banner').innerHTML = t.youngWorkerBanner || translations.en.youngWorkerBanner;
             document.getElementById('rights-header').textContent = t.rightsHeader;
             document.getElementById('rights-subheader').textContent = t.rightsSubheader;
             document.getElementById('right-to-know').innerHTML = t.rightToKnow;
@@ -978,20 +1011,50 @@ END:VCARD`;
                 nextQuestionBtn.textContent = (currentQuestionIndex === currentQuizQuestions.length - 1) ? t.quiz.submitButton : t.quiz.nextButton;
             }
 
-            function handleNextQuestion() {
-                const selectedOption = document.querySelector('input[name="quiz-option"]:checked');
-                if (!selectedOption) {
-                    showMessage('selectAnswer', 'error');
-                    return;
-                }
-                if (parseInt(selectedOption.value) === currentQuizQuestions[currentQuestionIndex].correctAnswer) {
-                    score++;
-                }
+            let awaitingContinue = false;
+
+            function advanceQuestion() {
                 currentQuestionIndex++;
                 if (currentQuestionIndex < currentQuizQuestions.length) {
                     displayQuestion();
                 } else {
                     showQuizResults();
+                }
+            }
+
+            function handleNextQuestion() {
+                const t = translations[currentLang] || translations.en;
+                if (awaitingContinue) {
+                    awaitingContinue = false;
+                    advanceQuestion();
+                    return;
+                }
+                const selectedOption = document.querySelector('input[name="quiz-option"]:checked');
+                if (!selectedOption) {
+                    showMessage('selectAnswer', 'error');
+                    return;
+                }
+                const question = currentQuizQuestions[currentQuestionIndex];
+                if (parseInt(selectedOption.value) === question.correctAnswer) {
+                    score++;
+                    advanceQuestion();
+                } else {
+                    // Show which answer was correct before moving on
+                    document.querySelectorAll('#options-container .quiz-option').forEach((label, idx) => {
+                        label.querySelector('input').disabled = true;
+                        if (idx === question.correctAnswer) {
+                            label.classList.add('bg-green-100', 'border-green-500', 'font-semibold');
+                        }
+                        if (idx === parseInt(selectedOption.value)) {
+                            label.classList.add('bg-red-100', 'border-red-500');
+                        }
+                    });
+                    const fb = document.createElement('p');
+                    fb.className = 'text-red-600 font-semibold mt-3';
+                    fb.textContent = t.quiz.feedbackWrong || translations.en.quiz.feedbackWrong;
+                    document.getElementById('options-container').appendChild(fb);
+                    awaitingContinue = true;
+                    nextQuestionBtn.textContent = (currentQuestionIndex === currentQuizQuestions.length - 1) ? t.quiz.submitButton : t.quiz.nextButton;
                 }
             }
 
@@ -1008,15 +1071,22 @@ END:VCARD`;
                 
                 const passed = score >= passingScore;
                 
+                const ageQuestion = document.getElementById('age-question');
+
                 if (passed) {
                     resultsTitle.textContent = t.quiz.passedTitle;
                     resultsText.textContent = t.quiz.passedMessage;
-                    quizActionBtn.textContent = t.quiz.finishButton;
-                    quizActionBtn.href = "https://forms.gle/i9MmVPU1uPnTtpmY6"; 
-                    quizActionBtn.onclick = null;
+                    // Ask if the worker is 25 or younger / new to construction before showing the action button
+                    document.getElementById('age-question-text').textContent = t.quiz.ageQuestion || translations.en.quiz.ageQuestion;
+                    document.getElementById('age-yes-btn').textContent = t.quiz.ageYes || translations.en.quiz.ageYes;
+                    document.getElementById('age-no-btn').textContent = t.quiz.ageNo || translations.en.quiz.ageNo;
+                    ageQuestion.classList.remove('hidden');
+                    quizActionBtn.classList.add('hidden');
                     quizActionBtn.classList.remove('bg-red-500', 'hover:bg-red-700');
                     quizActionBtn.classList.add('bg-green-500', 'hover:bg-green-700');
                 } else {
+                    ageQuestion.classList.add('hidden');
+                    quizActionBtn.classList.remove('hidden');
                     resultsTitle.textContent = t.quiz.failedTitle;
                     resultsText.textContent = t.quiz.resultsText(score, currentQuizQuestions.length);
                     quizActionBtn.textContent = t.quiz.retakeButton;
@@ -1031,6 +1101,26 @@ END:VCARD`;
             }
 
             nextQuestionBtn.addEventListener('click', handleNextQuestion);
+
+            document.getElementById('age-yes-btn').addEventListener('click', () => {
+                const t = translations[currentLang] || translations.en;
+                const quizActionBtn = document.getElementById('quiz-action-btn');
+                document.getElementById('age-question').classList.add('hidden');
+                quizActionBtn.textContent = t.quiz.goToYoungBtn || translations.en.quiz.goToYoungBtn;
+                quizActionBtn.href = "young-worker.html";
+                quizActionBtn.onclick = null;
+                quizActionBtn.classList.remove('hidden');
+            });
+
+            document.getElementById('age-no-btn').addEventListener('click', () => {
+                const t = translations[currentLang] || translations.en;
+                const quizActionBtn = document.getElementById('quiz-action-btn');
+                document.getElementById('age-question').classList.add('hidden');
+                quizActionBtn.textContent = t.quiz.finishButton;
+                quizActionBtn.href = "https://forms.gle/i9MmVPU1uPnTtpmY6";
+                quizActionBtn.onclick = null;
+                quizActionBtn.classList.remove('hidden');
+            });
             
             startQuizButton.addEventListener('click', () => {
                if (!sectionOrder.every(id => document.getElementById(id).dataset.viewed === 'true')) {

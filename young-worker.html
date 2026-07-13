@@ -36,7 +36,7 @@
             margin-bottom: 1rem;
         }
         .section-content.active {
-            max-height: 2000px;
+            max-height: 5000px;
             padding: 1.5rem;
         }
         .arrow {
@@ -44,6 +44,16 @@
         }
         .arrow.rotate {
             transform: rotate(90deg);
+        }
+        .sub-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .sub-title:first-child {
+            margin-top: 0;
         }
         .message-box {
             position: fixed;
@@ -85,90 +95,56 @@
             <p id="welcome-message" class="text-lg text-gray-600 mt-4"></p>
         </header>
 
+        <!-- 1. Rights, duties & supervision -->
         <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('supervisor-content')">
-                <h2 id="supervisor-header" class="text-2xl font-semibold"></h2>
+            <div class="section-header" onclick="toggleSection('group1-content')">
+                <h2 id="group1-header" class="text-2xl font-semibold"></h2>
                 <span class="arrow text-3xl">&#9658;</span>
             </div>
-            <div id="supervisor-content" class="section-content" data-viewed="false">
+            <div id="group1-content" class="section-content" data-viewed="false">
+                <h3 id="supervisor-header" class="sub-title"></h3>
                 <p id="supervisor-text" class="text-gray-700"></p>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('duties-content')">
-                <h2 id="duties-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="duties-content" class="section-content" data-viewed="false">
+                <h3 id="duties-header" class="sub-title"></h3>
                 <ul class="list-disc pl-5 text-gray-700 space-y-2">
                     <li id="duty-employer"></li>
                     <li id="duty-supervisor"></li>
                     <li id="duty-worker"></li>
                 </ul>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('procedures-content')">
-                <h2 id="procedures-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="procedures-content" class="section-content" data-viewed="false">
+                <h3 id="procedures-header" class="sub-title"></h3>
                 <p id="procedures-text" class="text-gray-700"></p>
             </div>
         </section>
 
+        <!-- 2. Working alone & personal safety -->
         <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('alone-content')">
-                <h2 id="alone-header" class="text-2xl font-semibold"></h2>
+            <div class="section-header" onclick="toggleSection('group2-content')">
+                <h2 id="group2-header" class="text-2xl font-semibold"></h2>
                 <span class="arrow text-3xl">&#9658;</span>
             </div>
-            <div id="alone-content" class="section-content" data-viewed="false">
+            <div id="group2-content" class="section-content" data-viewed="false">
+                <h3 id="alone-header" class="sub-title"></h3>
                 <p id="alone-text" class="text-gray-700"></p>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('violence-content')">
-                <h2 id="violence-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="violence-content" class="section-content" data-viewed="false">
+                <h3 id="violence-header" class="sub-title"></h3>
                 <p id="violence-text" class="text-gray-700"></p>
+                <h3 id="harassment-header" class="sub-title"></h3>
+                <p id="harassment-text" class="text-gray-700"></p>
             </div>
         </section>
 
+        <!-- 3. Emergencies & hazardous materials -->
         <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('emergency-content')">
-                <h2 id="emergency-header" class="text-2xl font-semibold"></h2>
+            <div class="section-header" onclick="toggleSection('group3-content')">
+                <h2 id="group3-header" class="text-2xl font-semibold"></h2>
                 <span class="arrow text-3xl">&#9658;</span>
             </div>
-            <div id="emergency-content" class="section-content" data-viewed="false">
+            <div id="group3-content" class="section-content" data-viewed="false">
+                <h3 id="emergency-header" class="sub-title"></h3>
                 <ul class="list-disc pl-5 text-gray-700 space-y-2">
                     <li id="emergency-eyewash"></li>
                     <li id="emergency-exits"></li>
                     <li id="emergency-extinguisher"></li>
                 </ul>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('program-content')">
-                <h2 id="program-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="program-content" class="section-content" data-viewed="false">
-                <p id="program-text" class="text-gray-700"></p>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('whmis-content')">
-                <h2 id="whmis-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="whmis-content" class="section-content" data-viewed="false">
+                <h3 id="whmis-header" class="sub-title"></h3>
                 <ul class="list-disc pl-5 text-gray-700 space-y-2">
                     <li id="whmis-labels"></li>
                     <li id="whmis-handling"></li>
@@ -177,23 +153,17 @@
             </div>
         </section>
 
+        <!-- 4. Safety program & contacts -->
         <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('rep-content')">
-                <h2 id="rep-header" class="text-2xl font-semibold"></h2>
+            <div class="section-header" onclick="toggleSection('group4-content')">
+                <h2 id="group4-header" class="text-2xl font-semibold"></h2>
                 <span class="arrow text-3xl">&#9658;</span>
             </div>
-            <div id="rep-content" class="section-content" data-viewed="false">
+            <div id="group4-content" class="section-content" data-viewed="false">
+                <h3 id="program-header" class="sub-title"></h3>
+                <p id="program-text" class="text-gray-700"></p>
+                <h3 id="rep-header" class="sub-title"></h3>
                 <p id="rep-text" class="text-gray-700"></p>
-            </div>
-        </section>
-
-        <section class="mb-8">
-            <div class="section-header" onclick="toggleSection('harassment-content')">
-                <h2 id="harassment-header" class="text-2xl font-semibold"></h2>
-                <span class="arrow text-3xl">&#9658;</span>
-            </div>
-            <div id="harassment-content" class="section-content" data-viewed="false">
-                <p id="harassment-text" class="text-gray-700"></p>
             </div>
         </section>
 
@@ -211,7 +181,11 @@
         const translations = {
             en: {
                 mainTitle: "Young & New Worker Orientation",
-                welcomeMessage: "This supplement is required if you are under 25 years old OR new to construction / new to this site. Review every section, then register at the end.",
+                welcomeMessage: "This supplement is required if you are 25 years old or younger, OR new to construction / new to this site. Review every section, then register at the end.",
+                group1Header: "Rights, Duties & Supervision",
+                group2Header: "Working Alone & Personal Safety",
+                group3Header: "Emergencies & Hazardous Materials",
+                group4Header: "Safety Program & Contacts",
                 supervisorHeader: "Know Your Supervisor",
                 supervisorText: "Before starting work, make sure you know <strong>who your direct supervisor (foreman) is and how to reach them</strong>. Your supervisor is your first contact for questions, hazards, and emergencies. If you don't know who your supervisor is, ask before you start working.",
                 dutiesHeader: "Who Is Responsible for Your Safety",
@@ -224,30 +198,33 @@
                 aloneText: "Working alone should be avoided whenever possible. If your foreman assigns you to work alone, <strong>your trade's foreman is responsible for checking on your well-being periodically</strong> during the task. If you are working alone and feel unsafe or need help, contact your foreman or the CSO (Bethzy – 604 906 0247). Make sure your foreman always knows where you are working.",
                 violenceHeader: "If You Face Violence or Threats",
                 violenceText: "Remove yourself from the situation and get to a safe location. Do not confront the person. Report it immediately to the CSO (Bethzy – 604 906 0247). <strong>Call 911 if there is immediate danger.</strong>",
+                harassmentHeader: "Harassment Complaints — Follow-up",
+                harassmentText: "All reports of bullying, harassment, or violence are investigated by the <strong>CSO (Bethzy Hernandez)</strong> promptly and confidentially.",
                 emergencyHeader: "Emergency Information",
                 emergencyEyewash: "<strong>Eye wash:</strong> If you get anything in your eyes, go to the <strong>First Aid room in the WDC site trailer</strong>.",
                 emergencyExits: "<strong>Emergency exits:</strong> Always know the nearest exit route from your work area. When the evacuation alarm sounds (1 long, continuous blast), go to the muster point in front of the site office.",
                 emergencyExtinguisher: "<strong>How to use a fire extinguisher — PASS:</strong> <strong>P</strong>ull the pin, <strong>A</strong>im at the base of the fire, <strong>S</strong>queeze the handle, <strong>S</strong>weep side to side. Only fight small fires. If in doubt, evacuate and raise the alarm.",
-                programHeader: "WDC Health & Safety Program",
-                programText: "WDC has a written Occupational Health and Safety Program that includes safe work procedures, hazard assessments, inspections, incident reporting, and training records. You can consult it in the <strong>First Aid room in the WDC site trailer</strong>.",
                 whmisHeader: "Hazardous Materials (WHMIS) Basics",
                 whmisLabels: "<strong>Labels:</strong> Every hazardous product has a supplier label with hazard pictograms — read it before use. <strong>Never use a product from an unlabeled container.</strong>",
                 whmisHandling: "<strong>Handling, storage & disposal:</strong> Follow the instructions on the label and the Safety Data Sheet (SDS). Return products to their storage location. Never pour chemicals into drains or regular garbage.",
                 whmisSpills: "<strong>Spills:</strong> Stop work, keep people away, and report immediately to your supervisor and the CSO. Do not clean up a chemical spill unless you are trained to do so.",
+                programHeader: "WDC Health & Safety Program",
+                programText: "WDC has a written Occupational Health and Safety Program that includes safe work procedures, hazard assessments, inspections, incident reporting, and training records. You can consult it in the <strong>First Aid room in the WDC site trailer</strong>.",
                 repHeader: "Worker Safety Representative",
                 repText: "The Worker Health and Safety Representative for this site is <strong>Dan McGuire – 604 938 4354</strong>. You can talk to him about any safety concern, in addition to your supervisor and the CSO.",
-                harassmentHeader: "Harassment Complaints — Follow-up",
-                harassmentText: "All reports of bullying, harassment, or violence are investigated by the <strong>CSO (Bethzy Hernandez)</strong> promptly and confidentially.",
                 registerBtn: "Go to Registration Form",
                 registerNote: "You must open every section above before registering.",
                 messages: {
-                    reviewAll: "Please review all sections before registering.",
-                    formPending: "Registration form link coming soon. Please tell the CSO you completed this orientation."
+                    reviewAll: "Please review all sections before registering."
                 }
             },
             es: {
                 mainTitle: "Orientación para Trabajadores Jóvenes y Nuevos",
-                welcomeMessage: "Este suplemento es obligatorio si usted es menor de 25 años O es nuevo en la construcción / nuevo en este sitio. Revise cada sección y regístrese al final.",
+                welcomeMessage: "Este suplemento es obligatorio si usted tiene 25 años o menos, O es nuevo en la construcción / nuevo en este sitio. Revise cada sección y regístrese al final.",
+                group1Header: "Derechos, Deberes y Supervisión",
+                group2Header: "Trabajar Solo y Seguridad Personal",
+                group3Header: "Emergencias y Materiales Peligrosos",
+                group4Header: "Programa de Seguridad y Contactos",
                 supervisorHeader: "Conozca a su Supervisor",
                 supervisorText: "Antes de comenzar a trabajar, asegúrese de saber <strong>quién es su supervisor directo (foreman) y cómo contactarlo</strong>. Su supervisor es su primer contacto para preguntas, peligros y emergencias. Si no sabe quién es su supervisor, pregunte antes de empezar a trabajar.",
                 dutiesHeader: "Quién es Responsable de su Seguridad",
@@ -260,33 +237,29 @@
                 aloneText: "Se debe evitar trabajar solo siempre que sea posible. Si su foreman le asigna trabajar solo, <strong>el foreman de su trade es responsable de verificar su bienestar periódicamente</strong> durante la tarea. Si trabaja solo y se siente inseguro o necesita ayuda, contacte a su foreman o a la CSO (Bethzy – 604 906 0247). Asegúrese de que su foreman siempre sepa dónde está trabajando.",
                 violenceHeader: "Si Enfrenta Violencia o Amenazas",
                 violenceText: "Aléjese de la situación y vaya a un lugar seguro. No confronte a la persona. Repórtelo de inmediato a la CSO (Bethzy – 604 906 0247). <strong>Llame al 911 si hay peligro inmediato.</strong>",
+                harassmentHeader: "Quejas de Acoso — Seguimiento",
+                harassmentText: "Todos los reportes de intimidación, acoso o violencia son investigados por la <strong>CSO (Bethzy Hernandez)</strong> de manera pronta y confidencial.",
                 emergencyHeader: "Información de Emergencia",
                 emergencyEyewash: "<strong>Lavaojos:</strong> Si le entra algo en los ojos, acuda al <strong>cuarto de Primeros Auxilios en el tráiler del sitio de WDC</strong>.",
                 emergencyExits: "<strong>Salidas de emergencia:</strong> Siempre conozca la ruta de salida más cercana desde su área de trabajo. Cuando suene la alarma de evacuación (1 toque largo y continuo), vaya al punto de reunión frente a la oficina del sitio.",
                 emergencyExtinguisher: "<strong>Cómo usar un extintor — PASS:</strong> <strong>P</strong>: jale el pasador, <strong>A</strong>: apunte a la base del fuego, <strong>S</strong>: apriete la manija, <strong>S</strong>: barra de lado a lado. Solo combata fuegos pequeños. Si tiene dudas, evacúe y dé la alarma.",
-                programHeader: "Programa de Salud y Seguridad de WDC",
-                programText: "WDC tiene un Programa escrito de Salud y Seguridad Ocupacional que incluye procedimientos de trabajo seguro, evaluaciones de peligros, inspecciones, reporte de incidentes y registros de capacitación. Puede consultarlo en el <strong>cuarto de Primeros Auxilios en el tráiler del sitio de WDC</strong>.",
                 whmisHeader: "Materiales Peligrosos (WHMIS) — Básicos",
                 whmisLabels: "<strong>Etiquetas:</strong> Todo producto peligroso tiene una etiqueta del proveedor con pictogramas de peligro — léala antes de usarlo. <strong>Nunca use un producto de un envase sin etiqueta.</strong>",
                 whmisHandling: "<strong>Manejo, almacenamiento y desecho:</strong> Siga las instrucciones de la etiqueta y de la Hoja de Datos de Seguridad (SDS). Regrese los productos a su lugar de almacenamiento. Nunca vierta químicos en drenajes ni en la basura común.",
                 whmisSpills: "<strong>Derrames:</strong> Detenga el trabajo, mantenga a la gente alejada y repórtelo de inmediato a su supervisor y a la CSO. No limpie un derrame químico a menos que esté capacitado para hacerlo.",
+                programHeader: "Programa de Salud y Seguridad de WDC",
+                programText: "WDC tiene un Programa escrito de Salud y Seguridad Ocupacional que incluye procedimientos de trabajo seguro, evaluaciones de peligros, inspecciones, reporte de incidentes y registros de capacitación. Puede consultarlo en el <strong>cuarto de Primeros Auxilios en el tráiler del sitio de WDC</strong>.",
                 repHeader: "Representante de Seguridad de los Trabajadores",
                 repText: "El Representante de Salud y Seguridad de los Trabajadores de este sitio es <strong>Dan McGuire – 604 938 4354</strong>. Puede hablar con él sobre cualquier preocupación de seguridad, además de su supervisor y la CSO.",
-                harassmentHeader: "Quejas de Acoso — Seguimiento",
-                harassmentText: "Todos los reportes de intimidación, acoso o violencia son investigados por la <strong>CSO (Bethzy Hernandez)</strong> de manera pronta y confidencial.",
                 registerBtn: "Ir al Formulario de Registro",
                 registerNote: "Debe abrir todas las secciones antes de registrarse.",
                 messages: {
-                    reviewAll: "Por favor revise todas las secciones antes de registrarse.",
-                    formPending: "El enlace del formulario de registro estará disponible pronto. Avise a la CSO que completó esta orientación."
+                    reviewAll: "Por favor revise todas las secciones antes de registrarse."
                 }
             }
         };
 
-        const sectionOrder = [
-            'supervisor-content','duties-content','procedures-content','alone-content','violence-content',
-            'emergency-content','program-content','whmis-content','rep-content','harassment-content'
-        ];
+        const sectionOrder = ['group1-content','group2-content','group3-content','group4-content'];
 
         function toggleSection(id) {
             const content = document.getElementById(id);
@@ -315,6 +288,10 @@
             };
             set('main-title', 'mainTitle', false);
             set('welcome-message', 'welcomeMessage', false);
+            set('group1-header', 'group1Header', false);
+            set('group2-header', 'group2Header', false);
+            set('group3-header', 'group3Header', false);
+            set('group4-header', 'group4Header', false);
             set('supervisor-header', 'supervisorHeader', false);
             set('supervisor-text', 'supervisorText');
             set('duties-header', 'dutiesHeader', false);
@@ -327,20 +304,20 @@
             set('alone-text', 'aloneText');
             set('violence-header', 'violenceHeader', false);
             set('violence-text', 'violenceText');
+            set('harassment-header', 'harassmentHeader', false);
+            set('harassment-text', 'harassmentText');
             set('emergency-header', 'emergencyHeader', false);
             set('emergency-eyewash', 'emergencyEyewash');
             set('emergency-exits', 'emergencyExits');
             set('emergency-extinguisher', 'emergencyExtinguisher');
-            set('program-header', 'programHeader', false);
-            set('program-text', 'programText');
             set('whmis-header', 'whmisHeader', false);
             set('whmis-labels', 'whmisLabels');
             set('whmis-handling', 'whmisHandling');
             set('whmis-spills', 'whmisSpills');
+            set('program-header', 'programHeader', false);
+            set('program-text', 'programText');
             set('rep-header', 'repHeader', false);
             set('rep-text', 'repText');
-            set('harassment-header', 'harassmentHeader', false);
-            set('harassment-text', 'harassmentText');
             set('register-btn', 'registerBtn', false);
             set('register-note', 'registerNote', false);
         }
@@ -351,18 +328,14 @@
                 applyTranslations();
             });
 
-            document.getElementById('register-btn').addEventListener('click', (e) => {
+            const registerBtn = document.getElementById('register-btn');
+            registerBtn.addEventListener('click', (e) => {
                 if (!sectionOrder.every(id => document.getElementById(id).dataset.viewed === 'true')) {
                     e.preventDefault();
                     showMessage('reviewAll', 'error');
                     return;
                 }
-                if (!REGISTRATION_FORM_URL) {
-                    e.preventDefault();
-                    showMessage('formPending', 'error');
-                    return;
-                }
-                document.getElementById('register-btn').href = REGISTRATION_FORM_URL;
+                registerBtn.href = REGISTRATION_FORM_URL;
             });
 
             applyTranslations();

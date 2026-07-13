@@ -110,6 +110,12 @@
         .quiz-option input {
             margin-right: 1rem;
         }
+        .btn-wdc-green {
+            background-color: #96C61C;
+        }
+        .btn-wdc-green:hover {
+            background-color: #7da414;
+        }
         .download-btn {
             background-color: #3b82f6;
             color: white;
@@ -235,7 +241,7 @@
                         <button id="age-no-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-8 rounded"></button>
                     </div>
                 </div>
-                <a href="#" id="quiz-action-btn" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"></a>
+                <a href="#" id="quiz-action-btn" target="_blank" rel="noopener noreferrer" class="inline-block btn-wdc-green text-white font-bold py-2 px-4 rounded"></a>
             </div>
         </div>
     </div>
@@ -1083,7 +1089,7 @@ END:VCARD`;
                     ageQuestion.classList.remove('hidden');
                     quizActionBtn.classList.add('hidden');
                     quizActionBtn.classList.remove('bg-red-500', 'hover:bg-red-700');
-                    quizActionBtn.classList.add('bg-green-500', 'hover:bg-green-700');
+                    quizActionBtn.classList.add('btn-wdc-green');
                 } else {
                     ageQuestion.classList.add('hidden');
                     quizActionBtn.classList.remove('hidden');
@@ -1095,7 +1101,7 @@ END:VCARD`;
                         e.preventDefault();
                         startQuiz();
                     };
-                    quizActionBtn.classList.remove('bg-green-500', 'hover:bg-green-700');
+                    quizActionBtn.classList.remove('btn-wdc-green');
                     quizActionBtn.classList.add('bg-red-500', 'hover:bg-red-700');
                 }
             }

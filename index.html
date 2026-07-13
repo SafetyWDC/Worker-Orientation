@@ -110,6 +110,12 @@
         .quiz-option input {
             margin-right: 1rem;
         }
+        .btn-wdc-blue {
+            background-color: #003D52;
+        }
+        .btn-wdc-blue:hover {
+            background-color: #00293a;
+        }
         .btn-wdc-green {
             background-color: #96C61C;
         }
@@ -237,8 +243,8 @@
                 <div id="age-question" class="hidden mb-6">
                     <p id="age-question-text" class="text-lg font-semibold mb-4"></p>
                     <div class="flex gap-4 justify-center">
-                        <button id="age-yes-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-8 rounded"></button>
-                        <button id="age-no-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-8 rounded"></button>
+                        <button id="age-yes-btn" class="btn-wdc-green text-white font-bold py-2 px-8 rounded"></button>
+                        <button id="age-no-btn" class="btn-wdc-blue text-white font-bold py-2 px-8 rounded"></button>
                     </div>
                 </div>
                 <a href="#" id="quiz-action-btn" target="_blank" rel="noopener noreferrer" class="inline-block btn-wdc-green text-white font-bold py-2 px-4 rounded"></a>
@@ -1088,7 +1094,7 @@ END:VCARD`;
                     document.getElementById('age-no-btn').textContent = t.quiz.ageNo || translations.en.quiz.ageNo;
                     ageQuestion.classList.remove('hidden');
                     quizActionBtn.classList.add('hidden');
-                    quizActionBtn.classList.remove('bg-red-500', 'hover:bg-red-700');
+                    quizActionBtn.classList.remove('btn-wdc-blue');
                     quizActionBtn.classList.add('btn-wdc-green');
                 } else {
                     ageQuestion.classList.add('hidden');
@@ -1102,7 +1108,7 @@ END:VCARD`;
                         startQuiz();
                     };
                     quizActionBtn.classList.remove('btn-wdc-green');
-                    quizActionBtn.classList.add('bg-red-500', 'hover:bg-red-700');
+                    quizActionBtn.classList.add('btn-wdc-blue');
                 }
             }
 

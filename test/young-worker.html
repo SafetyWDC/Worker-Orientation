@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDC Young Worker Orientation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .section-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #96C61C;
+            color: white;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .section-header:hover {
+            background-color: #7da414;
+        }
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .section-content.active {
+            max-height: 5000px;
+            padding: 1.5rem;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+            color: #003D52;
+        }
+        .arrow.rotate {
+            transform: rotate(90deg);
+        }
+        .sub-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #96C61C;
+            padding-left: 0.6rem;
+        }
+        .sub-title:first-child {
+            margin-top: 0;
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2100;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 300px;
+            max-width: 90%;
+            transition: top 0.5s ease-out;
+        }
+        .message-box.hidden {
+            top: -100px;
+        }
+        .message-box.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div id="message" class="message-box hidden"></div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 md:p-10">
+        <header class="text-center mb-8">
+            <div class="flex justify-end mb-4">
+                 <select id="language-selector" class="p-2 border rounded-md shadow-sm">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="uk">Українська</option>
+                </select>
+            </div>
+            <h1 id="main-title" class="text-4xl font-bold mb-2" style="color:#003D52"></h1>
+            <p id="welcome-message" class="text-lg text-gray-600 mt-4"></p>
+            <div id="wrong-place-note" class="mt-5 p-3 rounded-lg text-sm text-left" style="background-color:#f4f6f8;border:1px solid #A5A5A5;color:#374151"></div>
+        </header>
+
+        <!-- 1. Rights, duties & supervision -->
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('group1-content')">
+                <h2 id="group1-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span>
+            </div>
+            <div id="group1-content" class="section-content" data-viewed="false">
+                <h3 id="supervisor-header" class="sub-title"></h3>
+                <p id="supervisor-text" class="text-gray-700"></p>
+                <h3 id="duties-header" class="sub-title"></h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li id="duty-employer"></li>
+                    <li id="duty-supervisor"></li>
+                    <li id="duty-worker"></li>
+                </ul>
+                <h3 id="procedures-header" class="sub-title"></h3>
+                <p id="procedures-text" class="text-gray-700"></p>
+            </div>
+        </section>
+
+        <!-- 2. Working alone & personal safety -->
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('group2-content')">
+                <h2 id="group2-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span>
+            </div>
+            <div id="group2-content" class="section-content" data-viewed="false">
+                <h3 id="alone-header" class="sub-title"></h3>
+                <p id="alone-text" class="text-gray-700"></p>
+                <h3 id="violence-header" class="sub-title"></h3>
+                <p id="violence-text" class="text-gray-700"></p>
+                <h3 id="tape-header" class="sub-title"></h3>
+                <p id="tape-text" class="text-gray-700"></p>
+            </div>
+        </section>
+
+        <!-- 3. Emergencies & hazardous materials -->
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('group3-content')">
+                <h2 id="group3-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span>
+            </div>
+            <div id="group3-content" class="section-content" data-viewed="false">
+                <h3 id="emergency-header" class="sub-title"></h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li id="emergency-eyewash"></li>
+                    <li id="emergency-exits"></li>
+                    <li id="emergency-extinguisher"></li>
+                </ul>
+                <h3 id="whmis-header" class="sub-title"></h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                    <li id="whmis-labels"></li>
+                    <li id="whmis-handling"></li>
+                    <li id="whmis-spills"></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. Safety program & contacts -->
+        <section class="mb-8">
+            <div class="section-header" onclick="toggleSection('group4-content')">
+                <h2 id="group4-header" class="text-2xl font-semibold"></h2>
+                <span class="arrow text-3xl">&#9658;</span>
+            </div>
+            <div id="group4-content" class="section-content" data-viewed="false">
+                <h3 id="program-header" class="sub-title"></h3>
+                <p id="program-text" class="text-gray-700"></p>
+                <h3 id="rep-header" class="sub-title"></h3>
+                <p id="rep-text" class="text-gray-700"></p>
+            </div>
+        </section>
+
+        <footer class="text-center mt-10">
+            <a href="#" id="register-btn" target="_blank" rel="noopener noreferrer" class="inline-block text-white font-bold py-3 px-6 rounded-lg text-lg" style="background-color:#003D52" onmouseover="this.style.backgroundColor='#00293a'" onmouseout="this.style.backgroundColor='#003D52'"></a>
+            <p id="register-note" class="text-gray-500 text-sm mt-3"></p>
+        </footer>
+    </div>
+
+    <script>
+        const REGISTRATION_FORM_URL = "https://forms.gle/i9MmVPU1uPnTtpmY6";
+
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                mainTitle: "Young Worker Orientation",
+                welcomeMessage: "Required if you're 25 or younger, or new to construction or this site. Review every section, then register at the end.",
+                group1Header: "Rights, Duties & Supervision",
+                group2Header: "Working Alone & Personal Safety",
+                group3Header: "Emergencies & Hazardous Materials",
+                group4Header: "Safety Program & Contacts",
+                supervisorHeader: "Know Your Supervisor",
+                supervisorText: "Know who your foreman is and how to reach them before you start work — they're your first contact for questions, hazards, and emergencies. Don't know who that is? Ask before you start.",
+                dutiesHeader: "Who Is Responsible for Your Safety",
+                dutyEmployer: "<strong>Your employer</strong> provides a safe workplace, training, supervision, and PPE instruction.",
+                dutySupervisor: "<strong>Your supervisor</strong> keeps you safe, makes sure you know the hazards of your tasks, and never assigns you work you're not trained for.",
+                dutyWorker: "<strong>You</strong> follow procedures and speak up. Unsure how to do something safely? <strong>STOP and ask</strong>.",
+                proceduresHeader: "Safe Work Procedures for Your Tasks",
+                proceduresText: "Your employer or supervisor shows you the safe procedure for each task before you do it for the first time. Never use tools or equipment you haven't been trained on. If something feels off, stop and check with your supervisor.",
+                aloneHeader: "Working Alone or in Isolation",
+                aloneText: "Avoid working alone whenever possible. If your foreman assigns it, they'll check on you periodically during the task. Feel unsafe or need help? Contact your foreman or WDC — Bethzy (604 906 0247) or Shaun (604 849 9816). Always make sure your foreman knows where you're working.",
+                violenceHeader: "If You Face Violence, Harassment, or Threats",
+                violenceText: "Get to a safe location and don't confront the person. Report it to WDC right away — Bethzy (604 906 0247) or Shaun (604 849 9816). We investigate every report promptly and confidentially. <strong>Call 911 if you're in immediate danger.</strong>",
+                tapeHeader: "Danger & Caution Tape",
+                tapeText: "<strong>Red Danger tape means NO ENTRY</strong> — never cross it, even if no one's working there. <strong>Caution tape means take care:</strong> you may cross it with caution.",
+                emergencyHeader: "Emergency Information",
+                emergencyEyewash: "<strong>Eye wash:</strong> Got something in your eyes? Go to the First Aid room in the WDC site trailer.",
+                emergencyExits: "<strong>Emergency exits:</strong> Know your nearest exit route. When the evacuation alarm sounds — one long blast, at least 10 seconds — go to the muster point in front of the site office.",
+                emergencyExtinguisher: "<strong>How to use a fire extinguisher — PASS:</strong> <strong>P</strong>ull the pin, <strong>A</strong>im at the base of the fire, <strong>S</strong>queeze the handle, <strong>S</strong>weep side to side. Only fight small fires — if in doubt, evacuate and raise the alarm.",
+                whmisHeader: "Hazardous Materials (WHMIS) Basics",
+                whmisLabels: "<strong>Labels:</strong> Every hazardous product has a supplier label with hazard pictograms — read it before use. <strong>Never use a product from an unlabeled container.</strong>",
+                whmisHandling: "<strong>Handling, storage & disposal:</strong> Follow the label and the Safety Data Sheet (SDS) — it's digital, scan the QR code on the Safety Board at the entrance. Return products to their storage spot. Never pour chemicals into drains or regular garbage.",
+                whmisSpills: "<strong>Spills:</strong> Stop work, keep people away, and report it right away to your supervisor and WDC. Don't clean up a chemical spill unless you're trained to.",
+                programHeader: "WDC Health & Safety Program",
+                programText: "WDC keeps a written Health & Safety Program — safe work procedures, hazard assessments, inspections, incident reports, and training records. You can view it in the First Aid room in the WDC site trailer.",
+                repHeader: "Worker Safety Representative",
+                repText: "The Worker Health and Safety Representative for this site is Dan McGuire – 604 938 4354. Talk to him about any safety concern, in addition to your supervisor and WDC.",
+                wrongPlaceNote: "This orientation is only for workers <strong>25 years old or younger</strong> (or new to construction). Arrived here by mistake? <a href='https://forms.gle/i9MmVPU1uPnTtpmY6' target='_blank' rel='noopener noreferrer' style='color:#003D52;font-weight:bold;text-decoration:underline'>Go to the Registration Form</a>.",
+                registerBtn: "Go to Registration Form",
+                registerNote: "You must open every section above before registering.",
+                messages: {
+                    reviewAll: "Please review all sections before registering."
+                }
+            },
+            es: {
+                mainTitle: "Orientación para Trabajadores Jóvenes",
+                welcomeMessage: "Obligatorio si tiene 25 años o menos, o es nuevo en la construcción o en este sitio. Revise cada sección y regístrese al final.",
+                group1Header: "Derechos, Deberes y Supervisión",
+                group2Header: "Trabajar Solo y Seguridad Personal",
+                group3Header: "Emergencias y Materiales Peligrosos",
+                group4Header: "Programa de Seguridad y Contactos",
+                supervisorHeader: "Conozca a su Supervisor",
+                supervisorText: "Sepa quién es su foreman y cómo contactarlo antes de empezar a trabajar — es su primer contacto para preguntas, peligros y emergencias. ¿No sabe quién es? Pregunte antes de comenzar.",
+                dutiesHeader: "Quién es Responsable de su Seguridad",
+                dutyEmployer: "<strong>Su empleador</strong> le da un lugar de trabajo seguro, capacitación, supervisión e instrucción sobre el EPP.",
+                dutySupervisor: "<strong>Su supervisor</strong> cuida su seguridad, se asegura de que conozca los peligros de sus tareas, y nunca le asigna trabajo para el que no está capacitado.",
+                dutyWorker: "<strong>Usted</strong> sigue los procedimientos y habla si algo no está claro. ¿No sabe cómo hacer algo con seguridad? <strong>DETÉNGASE y pregunte</strong>.",
+                proceduresHeader: "Procedimientos de Trabajo Seguro para sus Tareas",
+                proceduresText: "Su empleador o supervisor le muestra el procedimiento seguro de cada tarea antes de hacerla por primera vez. Nunca use herramientas o equipo para los que no ha sido capacitado. Si algo se siente mal, deténgase y consulte con su supervisor.",
+                aloneHeader: "Trabajar Solo o Aislado",
+                aloneText: "Evite trabajar solo siempre que sea posible. Si su foreman se lo asigna, él verificará su bienestar periódicamente durante la tarea. ¿Se siente inseguro o necesita ayuda? Contacte a su foreman o a WDC — Bethzy (604 906 0247) o Shaun (604 849 9816). Asegúrese de que su foreman siempre sepa dónde está trabajando.",
+                violenceHeader: "Si Enfrenta Violencia, Acoso o Amenazas",
+                violenceText: "Vaya a un lugar seguro y no confronte a la persona. Repórtelo a WDC de inmediato — Bethzy (604 906 0247) o Shaun (604 849 9816). Investigamos cada reporte de forma pronta y confidencial. <strong>Llame al 911 si hay peligro inmediato.</strong>",
+                tapeHeader: "Cinta de Peligro y de Precaución",
+                tapeText: "<strong>La cinta roja de Peligro (Danger) significa PROHIBIDO EL PASO</strong> — nunca la cruce, aunque no haya nadie trabajando ahí. <strong>La cinta de Precaución (Caution) significa tener cuidado:</strong> puede cruzarla con precaución.",
+                emergencyHeader: "Información de Emergencia",
+                emergencyEyewash: "<strong>Lavaojos:</strong> ¿Le entró algo en los ojos? Vaya al cuarto de Primeros Auxilios en el tráiler del sitio de WDC.",
+                emergencyExits: "<strong>Salidas de emergencia:</strong> Conozca su ruta de salida más cercana. Cuando suene la alarma de evacuación — un toque largo, de al menos 10 segundos — vaya al punto de reunión frente a la oficina del sitio.",
+                emergencyExtinguisher: "<strong>Cómo usar un extintor — PASS:</strong> <strong>P</strong>: jale el pasador, <strong>A</strong>: apunte a la base del fuego, <strong>S</strong>: apriete la manija, <strong>S</strong>: barra de lado a lado. Solo combata fuegos pequeños — si tiene dudas, evacúe y dé la alarma.",
+                whmisHeader: "Materiales Peligrosos (WHMIS) — Básicos",
+                whmisLabels: "<strong>Etiquetas:</strong> Todo producto peligroso tiene una etiqueta con pictogramas de peligro — léala antes de usarlo. <strong>Nunca use un producto de un envase sin etiqueta.</strong>",
+                whmisHandling: "<strong>Manejo, almacenamiento y desecho:</strong> Siga la etiqueta y la Hoja de Datos de Seguridad (SDS) — es digital, escanee el código QR en el Safety Board de la entrada. Regrese los productos a su lugar de almacenamiento. Nunca vierta químicos en drenajes ni en la basura común.",
+                whmisSpills: "<strong>Derrames:</strong> Detenga el trabajo, mantenga a la gente alejada, y repórtelo de inmediato a su supervisor y a WDC. No limpie un derrame químico a menos que esté capacitado para hacerlo.",
+                programHeader: "Programa de Salud y Seguridad de WDC",
+                programText: "WDC tiene un Programa escrito de Salud y Seguridad — procedimientos de trabajo seguro, evaluaciones de peligros, inspecciones, reporte de incidentes y registros de capacitación. Puede consultarlo en el cuarto de Primeros Auxilios en el tráiler del sitio de WDC.",
+                repHeader: "Representante de Seguridad de los Trabajadores",
+                repText: "El Representante de Salud y Seguridad de los Trabajadores en este sitio es Dan McGuire – 604 938 4354. Hable con él sobre cualquier tema de seguridad, además de su supervisor y WDC.",
+                wrongPlaceNote: "Esta orientación es solo para trabajadores de <strong>25 años o menos</strong> (o nuevos en la construcción). ¿Llegó aquí por error? <a href='https://forms.gle/i9MmVPU1uPnTtpmY6' target='_blank' rel='noopener noreferrer' style='color:#003D52;font-weight:bold;text-decoration:underline'>Ir al Formulario de Registro</a>.",
+                registerBtn: "Ir al Formulario de Registro",
+                registerNote: "Debe abrir todas las secciones antes de registrarse.",
+                messages: {
+                    reviewAll: "Por favor revise todas las secciones antes de registrarse."
+                }
+            },
+            uk: {
+                mainTitle: "Інструктаж для молодих працівників",
+                welcomeMessage: "Обов'язковий, якщо вам 25 років або менше, або ви новачок у будівництві чи на цьому майданчику. Ознайомтеся з кожним розділом, а потім зареєструйтеся в кінці.",
+                group1Header: "Права, обов'язки та нагляд",
+                group2Header: "Робота наодинці та особиста безпека",
+                group3Header: "Надзвичайні ситуації та небезпечні матеріали",
+                group4Header: "Програма безпеки та контакти",
+                supervisorHeader: "Знайте свого керівника",
+                supervisorText: "Перед початком роботи дізнайтеся, хто ваш foreman (бригадир) і як із ним зв'язатися — це ваш перший контакт щодо запитань, небезпек і надзвичайних ситуацій. Не знаєте, хто це? Запитайте до початку роботи.",
+                dutiesHeader: "Хто відповідає за вашу безпеку",
+                dutyEmployer: "<strong>Ваш роботодавець</strong> забезпечує безпечне робоче місце, навчання, нагляд та інструктаж із ЗІЗ.",
+                dutySupervisor: "<strong>Ваш керівник</strong> дбає про вашу безпеку, стежить, щоб ви знали про небезпеки своїх завдань, і ніколи не доручає роботу, до якої ви не навчені.",
+                dutyWorker: "<strong>Ви</strong> дотримуєтеся процедур і говорите, коли щось не так. Не впевнені, як безпечно виконати завдання? <strong>ЗУПИНІТЬСЯ й запитайте</strong>.",
+                proceduresHeader: "Безпечні процедури для ваших завдань",
+                proceduresText: "Ваш роботодавець або керівник показує вам безпечну процедуру для кожного завдання, перш ніж ви виконаєте його вперше. Ніколи не користуйтеся інструментами чи обладнанням, до яких ви не навчені. Якщо щось здається не так, зупиніться й порадьтеся з керівником.",
+                aloneHeader: "Робота наодинці або в ізоляції",
+                aloneText: "Уникайте роботи наодинці, коли це можливо. Якщо foreman призначає таку роботу, він періодично перевірятиме вас під час завдання. Почуваєтеся небезпечно або потрібна допомога? Зверніться до foreman або до WDC — Bethzy (604 906 0247) чи Shaun (604 849 9816). Завжди стежте, щоб foreman знав, де ви працюєте.",
+                violenceHeader: "Якщо ви зіткнулися з насильством, утисками чи погрозами",
+                violenceText: "Вирушайте в безпечне місце й не вступайте в конфлікт із цією людиною. Негайно повідомте WDC — Bethzy (604 906 0247) чи Shaun (604 849 9816). Ми розглядаємо кожне повідомлення оперативно й конфіденційно. <strong>Телефонуйте 911, якщо вам загрожує безпосередня небезпека.</strong>",
+                tapeHeader: "Стрічки Danger і Caution",
+                tapeText: "<strong>Червона стрічка «Небезпека» (Danger) означає ВХІД ЗАБОРОНЕНО</strong> — ніколи не перетинайте її, навіть якщо там ніхто не працює. <strong>Стрічка «Увага» (Caution) означає «будьте обережні»:</strong> її можна перетинати з обережністю.",
+                emergencyHeader: "Інформація на випадок надзвичайної ситуації",
+                emergencyEyewash: "<strong>Промивання очей:</strong> Щось потрапило в очі? Ідіть до кімнати першої допомоги у вагончику WDC на майданчику.",
+                emergencyExits: "<strong>Аварійні виходи:</strong> Знайте найближчий шлях виходу. Коли лунає сигнал евакуації — один довгий сигнал, щонайменше 10 секунд — вирушайте до місця збору перед офісом майданчика.",
+                emergencyExtinguisher: "<strong>Як користуватися вогнегасником — PASS:</strong> <strong>P</strong>: висмикніть чеку, <strong>A</strong>: спрямуйте на основу вогню, <strong>S</strong>: стисніть ручку, <strong>S</strong>: водіть з боку в бік. Гасіть лише невеликі пожежі — якщо сумніваєтеся, евакуюйтеся й подайте сигнал тривоги.",
+                whmisHeader: "Основи роботи з небезпечними матеріалами (WHMIS)",
+                whmisLabels: "<strong>Етикетки:</strong> Кожен небезпечний продукт має етикетку постачальника з піктограмами небезпеки — прочитайте її перед використанням. <strong>Ніколи не користуйтеся продуктом із тари без етикетки.</strong>",
+                whmisHandling: "<strong>Поводження, зберігання та утилізація:</strong> Дотримуйтеся етикетки та паспорта безпеки (SDS) — він цифровий, скануйте QR-код на дошці безпеки (Safety Board) біля входу. Повертайте продукти на місце зберігання. Ніколи не виливайте хімікати в каналізацію чи звичайне сміття.",
+                whmisSpills: "<strong>Розливи:</strong> Припиніть роботу, не допускайте людей і негайно повідомте керівника та WDC. Не прибирайте розлив хімікатів, якщо ви не навчені цього робити.",
+                programHeader: "Програма охорони здоров'я та безпеки WDC",
+                programText: "WDC веде письмову Програму охорони здоров'я та безпеки — безпечні процедури роботи, оцінки небезпек, перевірки, звіти про інциденти та записи про навчання. Ви можете переглянути її в кімнаті першої допомоги у вагончику WDC на майданчику.",
+                repHeader: "Представник працівників з питань безпеки",
+                repText: "Представник працівників з питань охорони здоров'я та безпеки на цьому майданчику — Dan McGuire – 604 938 4354. Звертайтеся до нього з будь-яким питанням безпеки, окрім свого керівника та WDC.",
+                wrongPlaceNote: "Цей інструктаж лише для працівників віком <strong>25 років або менше</strong> (або новачків у будівництві). Потрапили сюди помилково? <a href='https://forms.gle/i9MmVPU1uPnTtpmY6' target='_blank' rel='noopener noreferrer' style='color:#003D52;font-weight:bold;text-decoration:underline'>Перейти до реєстраційної форми</a>.",
+                registerBtn: "Перейти до реєстраційної форми",
+                registerNote: "Перед реєстрацією потрібно відкрити кожен розділ вище.",
+                messages: {
+                    reviewAll: "Будь ласка, ознайомтеся з усіма розділами перед реєстрацією."
+                }
+            }
+        };
+
+        const sectionOrder = ['group1-content','group2-content','group3-content','group4-content'];
+
+        function toggleSection(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            const arrow = header.querySelector('.arrow');
+            content.classList.toggle('active');
+            arrow.classList.toggle('rotate');
+            if (content.classList.contains('active')) {
+                content.dataset.viewed = 'true';
+            }
+        }
+
+        function showMessage(key, type) {
+            const t = translations[currentLang] || translations.en;
+            const box = document.getElementById('message');
+            box.textContent = t.messages[key];
+            box.className = 'message-box ' + type;
+            setTimeout(() => box.classList.add('hidden'), 3500);
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang] || translations.en;
+            const set = (id, key, html = true) => {
+                const el = document.getElementById(id);
+                if (el) { html ? el.innerHTML = t[key] : el.textContent = t[key]; }
+            };
+            set('main-title', 'mainTitle', false);
+            set('welcome-message', 'welcomeMessage', false);
+            set('wrong-place-note', 'wrongPlaceNote');
+            set('group1-header', 'group1Header', false);
+            set('group2-header', 'group2Header', false);
+            set('group3-header', 'group3Header', false);
+            set('group4-header', 'group4Header', false);
+            set('supervisor-header', 'supervisorHeader', false);
+            set('supervisor-text', 'supervisorText');
+            set('duties-header', 'dutiesHeader', false);
+            set('duty-employer', 'dutyEmployer');
+            set('duty-supervisor', 'dutySupervisor');
+            set('duty-worker', 'dutyWorker');
+            set('procedures-header', 'proceduresHeader', false);
+            set('procedures-text', 'proceduresText');
+            set('alone-header', 'aloneHeader', false);
+            set('alone-text', 'aloneText');
+            set('violence-header', 'violenceHeader', false);
+            set('violence-text', 'violenceText');
+            set('tape-header', 'tapeHeader', false);
+            set('tape-text', 'tapeText');
+            set('emergency-header', 'emergencyHeader', false);
+            set('emergency-eyewash', 'emergencyEyewash');
+            set('emergency-exits', 'emergencyExits');
+            set('emergency-extinguisher', 'emergencyExtinguisher');
+            set('whmis-header', 'whmisHeader', false);
+            set('whmis-labels', 'whmisLabels');
+            set('whmis-handling', 'whmisHandling');
+            set('whmis-spills', 'whmisSpills');
+            set('program-header', 'programHeader', false);
+            set('program-text', 'programText');
+            set('rep-header', 'repHeader', false);
+            set('rep-text', 'repText');
+            set('register-btn', 'registerBtn', false);
+            set('register-note', 'registerNote', false);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('language-selector').addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyTranslations();
+            });
+
+            const registerBtn = document.getElementById('register-btn');
+            registerBtn.addEventListener('click', (e) => {
+                if (!sectionOrder.every(id => document.getElementById(id).dataset.viewed === 'true')) {
+                    e.preventDefault();
+                    showMessage('reviewAll', 'error');
+                    return;
+                }
+                registerBtn.href = REGISTRATION_FORM_URL;
+            });
+
+            applyTranslations();
+        });
+    </script>
+</body>
+</html>

@@ -159,6 +159,21 @@
             <h1 id="main-title" class="text-4xl font-bold text-gray-800 mb-2"></h1>
              <p id="welcome-message" class="text-lg text-gray-600 mt-4"></p>
         </header>
+
+        <div id="site-picker" class="mb-8 text-center">
+            <h2 id="site-prompt" class="text-2xl font-semibold mb-4" style="color:#003D52"></h2>
+            <div class="flex flex-col gap-3 items-center">
+                <button id="site-1600-btn" class="btn-wdc-green text-white font-bold py-3 px-6 rounded w-full md:w-auto">1600 Mt Fee Rd</button>
+                <button id="site-1825-btn" class="btn-wdc-green text-white font-bold py-3 px-6 rounded w-full md:w-auto">1825 Mt Fee Rd</button>
+            </div>
+        </div>
+
+        <div id="site-content" class="hidden">
+        <div class="flex items-center justify-between mb-6 p-3 rounded-lg" style="background-color:#f4f6f8;border:1px solid #A5A5A5">
+            <span id="site-badge" class="font-semibold" style="color:#003D52"></span>
+            <button id="change-site-btn" type="button" class="text-sm underline" style="color:#003D52"></button>
+        </div>
+
         
         <section class="mb-8">
             <div class="section-header" onclick="toggleSection('rights-content')">
@@ -231,6 +246,7 @@
             <button id="startQuizButton" class="btn-wdc-green text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline text-lg">
             </button>
         </footer>
+        </div>
     </div>
 
     <div id="quiz-modal" class="modal-overlay hidden">
@@ -257,6 +273,7 @@
 
     <script>
         let currentLang = 'en';
+        let currentSite = null;
 
         const translations = {
             en: {
@@ -304,6 +321,10 @@
                     "Smoking or vaping — designated areas only."
                 ],
                 startQuizButton: "Start Quiz",
+                sitePrompt: "Which site will you work at?",
+                siteLabel: "Your site:",
+                changeSite: "Change site",
+                site1825: { hazardExtinguishers: "<strong>Fire Extinguishers:</strong> There are no fire extinguishers on site yet, except on some of the heavy equipment.", washroomsRule: "<strong>Washrooms:</strong> there is one temporary toilet on site. There is no drinking water on site yet." },
                 quiz: {
                     questionBank: [
                         { question: "A guardrail was removed to lift materials and the task is finished. What applies?", options: ["Mark the opening with caution tape until tomorrow.", "Reinstall the guardrail immediately; while it's off, a harness is mandatory.", "It's enough to warn nearby coworkers to be careful."], correctAnswer: 1 },
@@ -380,6 +401,10 @@
                     "Fumar o vapear — solo en áreas designadas."
                 ],
                 startQuizButton: "Comenzar Cuestionario",
+                sitePrompt: "¿En qué sitio va a trabajar?",
+                siteLabel: "Su sitio:",
+                changeSite: "Cambiar de sitio",
+                site1825: { hazardExtinguishers: "<strong>Extintores de Incendios:</strong> Todavía no hay extintores en el sitio, excepto en algunos equipos pesados.", washroomsRule: "<strong>Baños:</strong> hay un baño temporal en el sitio. Todavía no hay agua potable en el sitio." },
                 quiz: {
                     questionBank: [
                         { question: "Se quitó una barandilla para subir material y la tarea ya terminó. ¿Qué aplica?", options: ["Marcar la abertura con cinta de precaución hasta mañana.", "Reinstalar la barandilla de inmediato; mientras no esté, el arnés es obligatorio.", "Basta con avisar a los compañeros cercanos que tengan cuidado."], correctAnswer: 1 },
@@ -456,6 +481,10 @@
                     "Fumer ou vapoter — zones désignées seulement."
                 ],
                 startQuizButton: "Commencer le Quiz",
+                sitePrompt: "Sur quel chantier allez-vous travailler ?",
+                siteLabel: "Votre chantier :",
+                changeSite: "Changer de chantier",
+                site1825: { hazardExtinguishers: "<strong>Extincteurs :</strong> Il n'y a pas encore d'extincteurs sur le chantier, sauf sur certains équipements lourds.", washroomsRule: "<strong>Toilettes :</strong> il y a une toilette temporaire sur le chantier. Il n'y a pas encore d'eau potable sur le chantier." },
                 quiz: {
                     questionBank: [
                         { question: "Un garde-corps a été retiré pour monter du matériel et la tâche est terminée. Que faut-il faire ?", options: ["Marquer l'ouverture avec du ruban de sécurité jusqu'à demain.", "Réinstaller le garde-corps immédiatement ; tant qu'il est retiré, le harnais est obligatoire.", "Il suffit d'avertir les collègues à proximité de faire attention."], correctAnswer: 1 },
@@ -532,6 +561,10 @@
                     "Курение или вейпинг — только в отведённых местах."
                 ],
                 startQuizButton: "Начать Тест",
+                sitePrompt: "На каком объекте вы будете работать?",
+                siteLabel: "Ваш объект:",
+                changeSite: "Сменить объект",
+                site1825: { hazardExtinguishers: "<strong>Огнетушители:</strong> На объекте пока нет огнетушителей, кроме как на некоторой тяжёлой технике.", washroomsRule: "<strong>Туалеты:</strong> на объекте один временный туалет. Питьевой воды на объекте пока нет." },
                 quiz: {
                     questionBank: [
                         { question: "Ограждение сняли, чтобы поднять материалы, и работа закончена. Что нужно сделать?", options: ["Обозначить проём сигнальной лентой до завтра.", "Немедленно установить ограждение обратно; пока его нет, страховочная привязь обязательна.", "Достаточно предупредить коллег рядом, чтобы были осторожны."], correctAnswer: 1 },
@@ -608,6 +641,10 @@
                     "Куріння чи вейпінг — лише у відведених місцях."
                 ],
                 startQuizButton: "Почати тест",
+                sitePrompt: "На якому майданчику ви працюватимете?",
+                siteLabel: "Ваш майданчик:",
+                changeSite: "Змінити майданчик",
+                site1825: { hazardExtinguishers: "<strong>Вогнегасники:</strong> На майданчику поки що немає вогнегасників, окрім як на деякій важкій техніці.", washroomsRule: "<strong>Туалети:</strong> на майданчику один тимчасовий туалет. Питної води на майданчику поки що немає." },
                 quiz: {
                     questionBank: [
                         { question: "Огорожу зняли, щоб підняти матеріали, і роботу завершено. Що потрібно зробити?", options: ["Позначити отвір попереджувальною стрічкою до завтра.", "Негайно встановити огорожу назад; поки її немає, страхувальний пояс обов'язковий.", "Достатньо попередити колег поруч, щоб були обережні."], correctAnswer: 1 },
@@ -684,6 +721,10 @@
                     "Rauchen oder Dampfen — nur in ausgewiesenen Bereichen."
                 ],
                 startQuizButton: "Quiz starten",
+                sitePrompt: "Auf welcher Baustelle werden Sie arbeiten?",
+                siteLabel: "Ihre Baustelle:",
+                changeSite: "Baustelle wechseln",
+                site1825: { hazardExtinguishers: "<strong>Feuerlöscher:</strong> Auf der Baustelle gibt es noch keine Feuerlöscher, außer an einigen schweren Maschinen.", washroomsRule: "<strong>Toiletten:</strong> Auf der Baustelle gibt es eine provisorische Toilette. Trinkwasser gibt es auf der Baustelle noch nicht." },
                 quiz: {
                     questionBank: [
                         { question: "Ein Geländer wurde entfernt, um Material hochzuheben, und die Arbeit ist beendet. Was gilt?", options: ["Die Öffnung bis morgen mit Warnband markieren.", "Das Geländer sofort wieder anbringen; solange es fehlt, ist ein Auffanggurt Pflicht.", "Es reicht, Kollegen in der Nähe zur Vorsicht zu mahnen."], correctAnswer: 1 },
@@ -760,6 +801,10 @@
                     "Kouření nebo vapování — pouze ve vyhrazených prostorách."
                 ],
                 startQuizButton: "Spustit Kvíz",
+                sitePrompt: "Na kterém staveništi budete pracovat?",
+                siteLabel: "Vaše staveniště:",
+                changeSite: "Změnit staveniště",
+                site1825: { hazardExtinguishers: "<strong>Hasicí Přístroje:</strong> Na staveništi zatím nejsou žádné hasicí přístroje, kromě některé těžké techniky.", washroomsRule: "<strong>Toalety:</strong> na staveništi je jedna dočasná toaleta. Pitná voda na staveništi zatím není." },
                 quiz: {
                     questionBank: [
                         { question: "Zábradlí bylo odstraněno kvůli zvedání materiálu a práce je hotová. Co platí?", options: ["Označit otvor výstražnou páskou do zítřka.", "Zábradlí ihned vrátit na místo; dokud chybí, je postroj povinný.", "Stačí upozornit kolegy poblíž, aby byli opatrní."], correctAnswer: 1 },
@@ -836,6 +881,10 @@
                     "धूम्रपान या वापिंग — केवल निर्दिष्ट क्षेत्रों में।"
                 ],
                 startQuizButton: "क्विज़ शुरू करें",
+                sitePrompt: "आप किस साइट पर काम करेंगे?",
+                siteLabel: "आपकी साइट:",
+                changeSite: "साइट बदलें",
+                site1825: { hazardExtinguishers: "<strong>अग्निशामक:</strong> साइट पर अभी कोई अग्निशामक नहीं है, केवल कुछ भारी उपकरणों में हैं।", washroomsRule: "<strong>शौचालय:</strong> साइट पर एक अस्थायी शौचालय है। साइट पर अभी पीने योग्य पानी नहीं है।" },
                 quiz: {
                     questionBank: [
                         { question: "सामग्री चढ़ाने के लिए एक रेलिंग (guardrail) हटाई गई थी और काम पूरा हो गया है। क्या करना चाहिए?", options: ["कल तक खुले हिस्से को सावधानी टेप से चिह्नित करें।", "रेलिंग तुरंत वापस लगाएँ; जब तक वह नहीं है, हार्नेस पहनना अनिवार्य है।", "पास के साथियों को सावधान रहने के लिए कहना काफी है।"], correctAnswer: 1 },
@@ -905,16 +954,22 @@
             document.getElementById('hazard-wildlife').innerHTML = t.hazardWildlife;
             document.getElementById('hazard-heights').innerHTML = t.hazardHeights;
             document.getElementById('hazard-whmis').innerHTML = t.hazardWhmis;
-            document.getElementById('hazard-extinguishers').innerHTML = t.hazardExtinguishers;
+            const siteOverrides = (currentSite === '1825') ? (t.site1825 || translations.en.site1825) : null;
+            document.getElementById('hazard-extinguishers').innerHTML = siteOverrides ? siteOverrides.hazardExtinguishers : t.hazardExtinguishers;
             document.getElementById('rules-header').textContent = t.rulesHeader;
             const rulesListEl = document.getElementById('rules-list');
             rulesListEl.innerHTML = '';
-            (t.rulesList || translations.en.rulesList).forEach(rule => {
+            const rules = (t.rulesList || translations.en.rulesList).slice();
+            if (siteOverrides) rules[5] = siteOverrides.washroomsRule;
+            rules.forEach(rule => {
                 const li = document.createElement('li');
                 li.innerHTML = rule;
                 rulesListEl.appendChild(li);
             });
             document.getElementById('startQuizButton').textContent = t.startQuizButton;
+            document.getElementById('site-prompt').textContent = t.sitePrompt || translations.en.sitePrompt;
+            document.getElementById('change-site-btn').textContent = t.changeSite || translations.en.changeSite;
+            document.getElementById('site-badge').textContent = (t.siteLabel || translations.en.siteLabel) + ' ' + (currentSite ? currentSite + ' Mt Fee Rd' : '');
         }
 
         const sectionOrder = ['rights-content', 'emergency-contacts-content', 'hazards-content', 'rules-content'];
@@ -964,6 +1019,27 @@ END:VCARD`;
             const languageSelector = document.getElementById('language-selector');
 
             changeLanguage('en');
+
+            function chooseSite(site) {
+                currentSite = site;
+                document.getElementById('site-picker').classList.add('hidden');
+                document.getElementById('site-content').classList.remove('hidden');
+                changeLanguage(currentLang);
+            }
+            document.getElementById('site-1600-btn').addEventListener('click', () => chooseSite('1600'));
+            document.getElementById('site-1825-btn').addEventListener('click', () => chooseSite('1825'));
+            document.getElementById('change-site-btn').addEventListener('click', () => {
+                currentSite = null;
+                sectionOrder.forEach(id => {
+                    const c = document.getElementById(id);
+                    c.dataset.viewed = 'false';
+                    c.classList.remove('active');
+                    c.previousElementSibling.querySelector('.arrow').classList.remove('rotate');
+                });
+                document.getElementById('footer').classList.add('hidden');
+                document.getElementById('site-content').classList.add('hidden');
+                document.getElementById('site-picker').classList.remove('hidden');
+            });
 
             languageSelector.addEventListener('change', (event) => {
                 changeLanguage(event.target.value);
